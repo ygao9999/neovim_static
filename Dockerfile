@@ -19,9 +19,9 @@ RUN pkg update && pkg install -y \
     libtool \
     coreutils \
     gettext \
-    file \
+    file 
     # 注意：我们不安装 libiconv-static，因为我们要自己编译
-    gperf
+
 
 # 自己编译一份纯静态 libiconv（安装到 ~/local）
 RUN mkdir -p /data/data/com.termux/files/home/tmp/iconv-build && cd /data/data/com.termux/files/home/tmp/iconv-build && \
@@ -43,7 +43,7 @@ ENV CMAKE_BUILD_PARALLEL_LEVEL=2
 ENV VERBOSE=1
 
 # 设置环境变量，引导 CMake 找到我们自己的静态 iconv
-ENV CMAKE_PREFIX_PATH=/data/data/com.termux/files/home/local
+
 ENV Iconv_LIBRARY=/data/data/com.termux/files/home/local/lib/libiconv.a
 ENV Iconv_INCLUDE_DIR=/data/data/com.termux/files/home/local/include
 
