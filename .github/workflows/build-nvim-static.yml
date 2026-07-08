@@ -109,23 +109,19 @@ jobs:
       - name: Build static nvim image
         id: build
         if: ${{ github.event_name != 'workflow_dispatch' || steps.should_run.outputs.run == 'true' }}
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: ./Dockerfile
-          platforms: ${{ matrix.platform }}
-          load: true
-          tags: nvim-static:latest-${{ matrix.arch }}
-          build-args: |
-            NVIM_REF=${{ steps.ref.outputs.ref }}
-          # Plain progress so apk/cmake errors are visible in the GHA log
-          # instead of being hidden behind buildx's TUI.
-          outputs: type=docker
-          # Caching is scoped per-arch to avoid invalid cross-arch cache hits.
-          cache-from: type=gha,scope=nvim-${{ matrix.arch }}
-          cache-to: type=gha,scope=nvim-${{ matrix.arch }},mode=max
-        env:
-          BUILDKIT_PROGRESS: plain
+        run: |
+          docker build --build-arg NVIM_REF=${{ steps.ref.outputs.ref }} -t nvim-static:latest-${{ matrix.arch }} -f ./Dockerfile . > build.log 2>&1 || {
+            echo "Build failed. Committing log to debug-log-${{ matrix.arch }} branch..."
+            git checkout --orphan debug-log-${{ matrix.arch }}
+            git rm -rf .
+            mv build.log error.log
+            git add error.log
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@github.com"
+            git commit -m "Add build failure log"
+            git push origin debug-log-${{ matrix.arch }} --force
+            exit 1
+          }
 
       - name: Diagnose apk failure (only runs if build failed)
         if: ${{ failure() && steps.build.outcome == 'failure' }}
