@@ -1,0 +1,10 @@
+# Build artifacts
+out/
+nvim-static-*/
+nvim-static-*.tar.gz
+nvim-static-*.zip
+SHA256SUMS.txt
+
+# Editor / OS
+.DS_Store
+*.swp

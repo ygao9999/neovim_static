@@ -1,0 +1,267 @@
+name: Build static Neovim
+
+# Trigger rules:
+#  - push to main/master that touches build files
+#  - pull request to main
+#  - manual dispatch (lets you pick the Neovim ref, target arches, and whether to publish a release)
+#  - scheduled nightly build (comment out if not needed)
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'Dockerfile'
+      - '.github/workflows/build-nvim-static.yml'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      nvim_ref:
+        description: 'Neovim git ref to build (tag/branch/commit, e.g. stable, v0.10.4, nightly)'
+        required: false
+        default: 'stable'
+      arches:
+        description: 'Comma-separated target arches (choices: x86_64, arm64)'
+        required: false
+        default: 'x86_64,arm64'
+      publish_release:
+        description: 'Publish a GitHub Release with the artifacts (only on manual run)'
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    # 03:00 UTC every Sunday — rebuild against latest stable to catch musl/pkg bumps
+    - cron: '0 3 * * 0'
+
+# Cancel superseded runs on the same ref to save CI minutes.
+concurrency:
+  group: build-nvim-static-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (${{ matrix.arch }})
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 90
+    permissions:
+      contents: write   # needed for the optional Release upload step
+    strategy:
+      fail-fast: false  # one arch failing should not cancel the other
+      matrix:
+        include:
+          - arch: x86_64
+            runner: ubuntu-latest
+            platform: linux/amd64
+            need_qemu: false
+          - arch: arm64
+            # Native ARM runner (faster). Falls back to ubuntu-latest + QEMU
+            # if your repo is private or ARM runners aren't available.
+            # To force QEMU emulation instead, change runner to 'ubuntu-latest'
+            # and need_qemu to 'true'.
+            runner: ubuntu-24.04-arm
+            platform: linux/arm64
+            need_qemu: false
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU (only when cross-building via emulation)
+        if: ${{ matrix.need_qemu }}
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Resolve Neovim ref
+        id: ref
+        run: |
+          # workflow_dispatch input takes priority; otherwise default to 'stable'
+          REF="${{ inputs.nvim_ref }}"
+          if [ -z "$REF" ]; then REF="stable"; fi
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+          # Sanitize ref into a safe filename component (v0.10.4 -> v0.10.4, stable -> stable)
+          SAFE=$(echo "$REF" | tr -c 'A-Za-z0-9._-' '_')
+          echo "safe=$SAFE" >> "$GITHUB_OUTPUT"
+          echo "Building Neovim ref: $REF on ${{ matrix.arch }}"
+
+      - name: Filter matrix arches (manual dispatch only)
+        id: should_run
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          REQUESTED="${{ inputs.arches }}"
+          CURRENT="${{ matrix.arch }}"
+          if echo ",${REQUESTED}," | grep -q ",${CURRENT},"; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "Arch ${CURRENT} is selected (requested: ${REQUESTED})"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping arch ${CURRENT} (requested: ${REQUESTED})"
+          fi
+
+      - name: Build static nvim image
+        if: ${{ github.event_name != 'workflow_dispatch' || steps.should_run.outputs.run == 'true' }}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: ${{ matrix.platform }}
+          load: true
+          tags: nvim-static:latest-${{ matrix.arch }}
+          build-args: |
+            NVIM_REF=${{ steps.ref.outputs.ref }}
+          # Caching is scoped per-arch to avoid invalid cross-arch cache hits.
+          cache-from: type=gha,scope=nvim-${{ matrix.arch }}
+          cache-to: type=gha,scope=nvim-${{ matrix.arch }},mode=max
+
+      - name: Extract binary + runtime from image
+        if: ${{ github.event_name != 'workflow_dispatch' || steps.should_run.outputs.run == 'true' }}
+        run: |
+          set -euo pipefail
+          id=$(docker create nvim-static:latest-${{ matrix.arch }})
+          mkdir -p out
+          docker cp "${id}:/out/." out/
+          docker rm "${id}" > /dev/null
+          ls -la out/
+
+      - name: Verify static linkage
+        if: ${{ github.event_name != 'workflow_dispatch' || steps.should_run.outputs.run == 'true' }}
+        run: |
+          echo "=== ldd ./out/nvim ==="
+          ldd ./out/nvim || true
+          echo
+          echo "=== file ./out/nvim ==="
+          file ./out/nvim
+          echo
+          # Hard fail if ldd reports any shared library dependency.
+          if ldd ./out/nvim 2>&1 | grep -E '=> /|not found'; then
+            echo "::error::Binary is dynamically linked against shared libraries"
+            exit 1
+          fi
+          echo "OK: binary is fully static"
+
+      - name: Smoke-test the binary (no runtime)
+        if: ${{ github.event_name != 'workflow_dispatch' || steps.should_run.outputs.run == 'true' }}
+        run: |
+          chmod +x ./out/nvim
+          # With no VIMRUNTIME set this may warn, but --version must still work.
+          ./out/nvim --version | head -n 5
+
+      - name: Smoke-test the binary (with bundled runtime)
+        if: ${{ github.event_name != 'workflow_dispatch' || steps.should_run.outputs.run == 'true' }}
+        run: |
+          # Point the binary at the bundled runtime and run a trivial Lua eval.
+          export VIMRUNTIME="$PWD/out/runtime"
+          ./out/nvim --headless -u NONE -c 'lua print("nvim ok", vim.version().major, vim.version().minor)' -c 'qa!' 2>&1 | tail -n 5
+
+      - name: Stage release artifacts
+        if: ${{ github.event_name != 'workflow_dispatch' || steps.should_run.outputs.run == 'true' }}
+        id: stage
+        run: |
+          set -euo pipefail
+          # Determine the target arch string reported by the binary itself.
+          ARCH="${{ matrix.arch }}"
+          STAGE="nvim-static-${{ steps.ref.outputs.safe }}-${ARCH}"
+          mkdir -p "$STAGE"
+          # Put the binary at the root, runtime/ alongside it.
+          cp out/nvim "$STAGE/nvim"
+          cp -r out/runtime "$STAGE/runtime"
+          # Convenience launcher that auto-sets VIMRUNTIME based on the script's location.
+          cat > "$STAGE/nvim.sh" <<'EOF'
+          #!/usr/bin/env sh
+          # Auto-resolve VIMRUNTIME to the runtime/ dir next to this script.
+          HERE="$(cd "$(dirname "$0")" && pwd)"
+          export VIMRUNTIME="${HERE}/runtime"
+          exec "${HERE}/nvim" "$@"
+          EOF
+          chmod +x "$STAGE/nvim.sh"
+          # Make a tarball + zip for distribution.
+          tar -czf "${STAGE}.tar.gz" "$STAGE"
+          zip -r "${STAGE}.zip" "$STAGE" > /dev/null
+          # Produce a SHA256SUMS file covering both archives.
+          sha256sum "${STAGE}.tar.gz" "${STAGE}.zip" > "SHA256SUMS-${ARCH}.txt"
+          ls -la
+          echo "stage=${STAGE}" >> "$GITHUB_OUTPUT"
+          echo "arch=${ARCH}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload build artifacts
+        if: ${{ github.event_name != 'workflow_dispatch' || steps.should_run.outputs.run == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: nvim-static-${{ steps.ref.outputs.safe }}-${{ matrix.arch }}
+          path: |
+            nvim-static-*.tar.gz
+            nvim-static-*.zip
+            SHA256SUMS-*.txt
+          retention-days: 30
+          if-no-files-found: error
+
+  release:
+    name: Publish GitHub Release
+    needs: build
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_release }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Resolve Neovim ref (release job)
+        id: ref
+        run: |
+          REF="${{ inputs.nvim_ref }}"
+          if [ -z "$REF" ]; then REF="stable"; fi
+          SAFE=$(echo "$REF" | tr -c 'A-Za-z0-9._-' '_')
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+          echo "safe=$SAFE" >> "$GITHUB_OUTPUT"
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          pattern: nvim-static-${{ steps.ref.outputs.safe }}-*
+          merge-multiple: true
+
+      - name: Show downloaded artifacts
+        run: |
+          ls -laR artifacts/
+
+      - name: Consolidate SHA256SUMS
+        run: |
+          cd artifacts
+          cat SHA256SUMS-*.txt > SHA256SUMS.txt
+          rm SHA256SUMS-*.txt
+          sha256sum -c SHA256SUMS.txt
+          ls -la
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: nvim-static-${{ steps.ref.outputs.safe }}-${{ github.run_number }}
+          name: "Static Neovim ${{ steps.ref.outputs.ref }} (build #${{ github.run_number }})"
+          body: |
+            Fully static Neovim binaries built from ref `${{ steps.ref.outputs.ref }}`.
+
+            ## Downloads
+            Pick the archive matching your CPU architecture:
+            - `nvim-static-*-x86_64.tar.gz` / `.zip` — standard Linux x86_64 (Intel/AMD)
+            - `nvim-static-*-arm64.tar.gz` / `.zip` — Linux ARM64 (Apple Silicon Linux VM, Graviton, RPi 4/5, etc.)
+
+            ## Usage
+            1. Download and extract the tarball/zip for your platform.
+            2. Run `./nvim.sh` (recommended) — it auto-sets `$VIMRUNTIME`.
+            3. Or run `./nvim` directly with `export VIMRUNTIME=/path/to/runtime`.
+
+            ## Verification
+            `ldd ./nvim` reports: not a dynamic executable.
+
+            SHA256 checksums are in `SHA256SUMS.txt`.
+          files: |
+            artifacts/nvim-static-*.tar.gz
+            artifacts/nvim-static-*.zip
+            artifacts/SHA256SUMS.txt
