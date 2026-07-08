@@ -57,9 +57,26 @@ RUN git clone --depth 1 --branch "${NVIM_REF}" https://github.com/neovim/neovim.
 
 WORKDIR /neovim
 
-# Build Neovim with the static build flag and native optimizations.
-# CMAKE_INSTALL_PREFIX is left at the default (/usr/local) because we only
-# copy the compiled binary out of the image; install steps are skipped.
+# Build Neovim in two stages so a deps failure is isolated and easy to read.
+#
+# Why split: `make` (default target) builds `deps` then `nvim`. When the deps
+# phase fails, the error log mixes ninja output from ~10 parallel dep builds
+# (luajit, libuv, libvterm, libtermkey, unibilium, tree-sitter, msgpack, ...).
+# Splitting forces the deps phase to run alone, so the real error is visible.
+#
+# Why -j2 for ninja: GitHub runners have ~7 GB RAM. Ninja defaults to one job
+# per core (4 on ubuntu-latest). tree-sitter + libvterm + luajit compiling
+# simultaneously can OOM-kill a worker, and the kill message gets eaten by
+# interleaved output → you only see "ninja: subcommand failed" with no cause.
+ENV NINJA_FLAGS="-j2"
+
+# Stage 1: third-party deps. This is the slow, failure-prone part.
+# Don't pass -j to make here — make's -j controls recipe parallelism, but
+# deps is a single recipe that spawns one ninja invocation. ninja's own
+# parallelism is what matters, and we set that via NINJA_FLAGS above.
+RUN make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DSTATIC_BUILD=1" deps
+
+# Stage 2: nvim itself. Small .c files, safe to parallelize aggressively.
 RUN make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DSTATIC_BUILD=1" -j"$(nproc)"
 
 # ---- runtime packaging stage -------------------------------------------------
