@@ -30,25 +30,7 @@ RUN apk add --no-cache \
     ncurses-dev \
     ncurses-static
 
-# --- Group 3: community-repo dev+static pairs -------------------------------
-# NOTE: libtermkey and unibilium do NOT ship separate -static subpackages in
-# Alpine — the .a files are bundled inside the -dev package. Listing a
-# `libtermkey-static` or `unibilium-static` here makes apk fail with
-# "unable to select packages" (exit code 2). Do not add them.
-RUN apk add --no-cache \
-    libtermkey-dev \
-    libvterm-dev \
-    libvterm-static \
-    tree-sitter-dev \
-    tree-sitter-static \
-    unibilium-dev \
-    msgpack-c-dev
 
-# --- Group 4: Lua runtime + dev ---------------------------------------------
-RUN apk add --no-cache \
-    luajit-dev \
-    lua5.1-bitop \
-    lua5.1-lpeg
 
 # Allow overriding the Neovim ref (tag / branch / commit) at build time.
 # Defaults to 'stable'. Example: docker build --build-arg NVIM_REF=v0.10.4 .
