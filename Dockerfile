@@ -1,7 +1,8 @@
 FROM termux/termux-docker:latest AS builder
 
-# 1. 用普通用户安装构建依赖及 libiconv 静态库
 USER 1000:1000
+
+# 安装依赖及静态库（保留动态库供 git 等工具使用）
 RUN pkg update && pkg install -y \
     bash \
     cmake \
@@ -21,14 +22,6 @@ RUN pkg update && pkg install -y \
     file \
     libiconv-static
 
-# 2. 临时切换 root 删除动态库，强制后续链接使用静态库
-USER root
-RUN rm -f /data/data/com.termux/files/usr/lib/libiconv.so*
-
-# 3. 切回普通用户继续构建
-USER 1000:1000
-
-# 4. 克隆 Neovim 源码
 ARG NVIM_REF=stable
 RUN git clone --depth 1 --branch "${NVIM_REF}" https://github.com/neovim/neovim.git /data/data/com.termux/files/home/neovim
 
@@ -37,7 +30,7 @@ WORKDIR /data/data/com.termux/files/home/neovim
 ENV CMAKE_BUILD_PARALLEL_LEVEL=2
 ENV VERBOSE=1
 
-# Stage 1: 编译第三方依赖
+# Stage 1: 第三方依赖（使用默认链接，此处不强制静态 iconv）
 RUN set -e; \
     for attempt in 1 2 3; do \
       echo "===== deps build attempt $attempt/3 ====="; \
@@ -55,12 +48,13 @@ RUN set -e; \
       sleep 10; \
     done
 
-# Stage 2: 编译 nvim
+# Stage 2: 链接 nvim 时强制 iconv 静态链接
 RUN set -e; \
     for attempt in 1 2 3; do \
       echo "===== nvim build attempt $attempt/3 ====="; \
       if make CMAKE_BUILD_TYPE=Release \
-              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON" \
+              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON \
+                -DCMAKE_EXE_LINKER_FLAGS='-Wl,-Bstatic -liconv -Wl,-Bdynamic'" \
               -j"$(nproc)"; then \
         echo "===== nvim OK on attempt $attempt ====="; \
         break; \
@@ -73,10 +67,9 @@ RUN set -e; \
       sleep 10; \
     done
 
-# ---- 运行时打包阶段 -------------------------------------------------
+# ---- runtime 阶段 -------------------------------------------------
 FROM termux/termux-docker:latest AS runtime
 USER 1000:1000
-# 修复可能的镜像列表缺失问题
 RUN termux-change-repo || true
 RUN pkg update && pkg install -y tar file
 RUN mkdir -p /data/data/com.termux/files/home/out
@@ -85,7 +78,7 @@ COPY --from=builder /data/data/com.termux/files/home/neovim/runtime /data/data/c
 RUN file /data/data/com.termux/files/home/out/nvim > /data/data/com.termux/files/home/out/file-info.txt && \
     { ldd /data/data/com.termux/files/home/out/nvim 2>&1 || true; } > /data/data/com.termux/files/home/out/ldd.txt
 
-# ---- 最终导出阶段 -------------------------------------------------
+# ---- 最终导出 -------------------------------------------------
 FROM scratch
 COPY --from=runtime /data/data/com.termux/files/home/out /out
 CMD ["/out/nvim"]
