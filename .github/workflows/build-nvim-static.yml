@@ -110,6 +110,7 @@ jobs:
         id: build
         if: ${{ github.event_name != 'workflow_dispatch' || steps.should_run.outputs.run == 'true' }}
         run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
           docker build --build-arg NVIM_REF=${{ steps.ref.outputs.ref }} -t nvim-static:latest-${{ matrix.arch }} -f ./Dockerfile . > build.log 2>&1 || {
             echo "Build failed. Committing log to debug-log-${{ matrix.arch }} branch..."
             git checkout --orphan debug-log-${{ matrix.arch }}
