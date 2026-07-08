@@ -125,3 +125,4 @@ RUN file /out/nvim > /out/file-info.txt && \
 # artifacts we want, with no extra distro files.
 FROM scratch
 COPY --from=runtime /out /out
+CMD ["/out/nvim"]
