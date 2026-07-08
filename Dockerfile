@@ -1,7 +1,7 @@
 FROM termux/termux-docker:latest AS builder
 
-# Temporarily use root to install packages and remove the shared libiconv
-USER root
+# 1. 用普通用户安装构建依赖及 libiconv 静态库
+USER 1000:1000
 RUN pkg update && pkg install -y \
     bash \
     cmake \
@@ -19,13 +19,16 @@ RUN pkg update && pkg install -y \
     coreutils \
     gettext \
     file \
-    libiconv-static \
-    && rm -f /data/data/com.termux/files/usr/lib/libiconv.so*
+    libiconv-static
 
-# Switch back to the termux user
+# 2. 临时切换 root 删除动态库，强制后续链接使用静态库
+USER root
+RUN rm -f /data/data/com.termux/files/usr/lib/libiconv.so*
+
+# 3. 切回普通用户继续构建
 USER 1000:1000
 
-# Allow overriding the Neovim ref (tag / branch / commit) at build time.
+# 4. 克隆 Neovim 源码
 ARG NVIM_REF=stable
 RUN git clone --depth 1 --branch "${NVIM_REF}" https://github.com/neovim/neovim.git /data/data/com.termux/files/home/neovim
 
@@ -34,9 +37,7 @@ WORKDIR /data/data/com.termux/files/home/neovim
 ENV CMAKE_BUILD_PARALLEL_LEVEL=2
 ENV VERBOSE=1
 
-# Stage 1: third-party deps.
-# Note: We REMOVED -DSTATIC_BUILD=1. We want dependencies compiled statically into nvim,
-# but the final binary must dynamically link to Termux's libc.so and libdl.so.
+# Stage 1: 编译第三方依赖
 RUN set -e; \
     for attempt in 1 2 3; do \
       echo "===== deps build attempt $attempt/3 ====="; \
@@ -54,7 +55,7 @@ RUN set -e; \
       sleep 10; \
     done
 
-# Stage 2: nvim itself.
+# Stage 2: 编译 nvim
 RUN set -e; \
     for attempt in 1 2 3; do \
       echo "===== nvim build attempt $attempt/3 ====="; \
@@ -72,9 +73,11 @@ RUN set -e; \
       sleep 10; \
     done
 
-# ---- runtime packaging stage -------------------------------------------------
+# ---- 运行时打包阶段 -------------------------------------------------
 FROM termux/termux-docker:latest AS runtime
 USER 1000:1000
+# 修复可能的镜像列表缺失问题
+RUN termux-change-repo || true
 RUN pkg update && pkg install -y tar file
 RUN mkdir -p /data/data/com.termux/files/home/out
 COPY --from=builder /data/data/com.termux/files/home/neovim/build/bin/nvim /data/data/com.termux/files/home/out/nvim
@@ -82,7 +85,7 @@ COPY --from=builder /data/data/com.termux/files/home/neovim/runtime /data/data/c
 RUN file /data/data/com.termux/files/home/out/nvim > /data/data/com.termux/files/home/out/file-info.txt && \
     { ldd /data/data/com.termux/files/home/out/nvim 2>&1 || true; } > /data/data/com.termux/files/home/out/ldd.txt
 
-# ---- minimal export stage ----------------------------------------------------
+# ---- 最终导出阶段 -------------------------------------------------
 FROM scratch
 COPY --from=runtime /data/data/com.termux/files/home/out /out
 CMD ["/out/nvim"]
