@@ -24,7 +24,7 @@ RUN pkg update && pkg install -y \
     gperf
 
 # 自己编译一份纯静态 libiconv（安装到 ~/local）
-RUN mkdir -p ~/tmp/iconv-build && cd ~/tmp/iconv-build && \
+RUN mkdir -p /data/data/com.termux/files/home/tmp/iconv-build && cd /data/data/com.termux/files/home/tmp/iconv-build && \
     curl -L https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz -o libiconv.tar.gz && \
     tar xzf libiconv.tar.gz --strip-components=1 && \
     ./configure --prefix=/data/data/com.termux/files/home/local \
