@@ -19,7 +19,14 @@ RUN apk add --no-cache \
     gperf \
     make \
     samurai \
-    musl-dev
+    musl-dev \
+    unzip \
+    patch \
+    pkgconf \
+    autoconf \
+    automake \
+    libtool \
+    coreutils
 
 # --- Group 2: main-repo dev+static pairs ------------------------------------
 RUN apk add --no-cache \
