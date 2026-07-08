@@ -1,0 +1,652 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.65kB 0.0s done
+#1 DONE 0.1s
+
+#2 [auth] termux/termux-docker:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/termux/termux-docker:latest
+#3 DONE 0.6s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [builder 1/7] FROM docker.io/termux/termux-docker:latest@sha256:8fc42860ba5164fdf5a5217af5feb167c9c00919e0883ff9b0e2c8758bb545d4
+#5 resolve docker.io/termux/termux-docker:latest@sha256:8fc42860ba5164fdf5a5217af5feb167c9c00919e0883ff9b0e2c8758bb545d4 0.0s done
+#5 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 0B / 32B 0.1s
+#5 sha256:8fc42860ba5164fdf5a5217af5feb167c9c00919e0883ff9b0e2c8758bb545d4 1.38kB / 1.38kB done
+#5 sha256:00443f6ee1ae29d8a91b1c51626114720f430577930009c9cef8f734ea832fb9 735B / 735B done
+#5 sha256:c1f6f459ef1fe13cc3057d2c60831b7d48c037a2fb19d4d1f4f30b95a53b89df 2.96kB / 2.96kB done
+#5 sha256:21a1df9b1022694728074baa2ccf8b91f978aa11c03c0a91cd013becf91fbbcd 0B / 46.84MB 0.1s
+#5 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 32B / 32B 0.1s done
+#5 sha256:21a1df9b1022694728074baa2ccf8b91f978aa11c03c0a91cd013becf91fbbcd 14.68MB / 46.84MB 0.3s
+#5 sha256:21a1df9b1022694728074baa2ccf8b91f978aa11c03c0a91cd013becf91fbbcd 46.84MB / 46.84MB 0.5s
+#5 extracting sha256:21a1df9b1022694728074baa2ccf8b91f978aa11c03c0a91cd013becf91fbbcd
+#5 sha256:21a1df9b1022694728074baa2ccf8b91f978aa11c03c0a91cd013becf91fbbcd 46.84MB / 46.84MB 0.6s done
+#5 extracting sha256:21a1df9b1022694728074baa2ccf8b91f978aa11c03c0a91cd013becf91fbbcd 1.0s done
+#5 extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1
+#5 extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 done
+#5 DONE 2.7s
+
+#6 [runtime 2/7] RUN termux-change-repo || true
+#6 0.311 [?1049h[22;0;0t[1;24r(B[m[4l[?7h[?1h=[?1006;1000h[39;49m[?1h=[?1h=[39;49m(B[m[H[2J[18d(B[0;1m[36m[44m[J[H[K[2d[K[3d[K[4d[K[5d[K[6d[K[7d   (0[0;1m[37m[47mlqqqqqqqqqqqqqqqqqqqqqqqq(B[0;1m[34m[47mtermux-change-repo(0[0;1m[37m[47mqqqqqqqqqqqqqqqqqqqqqqqqqqq(0[0m[30m[47mk(B[0;1m[36m[44m[K[8d   (0[0;1m[37m[47mx(B[0m[30m[47m Do you want to choose a mirror group or a single mirror? Select     (0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[9d   (0[0;1m[37m[47mx(B[0m[30m[47m with space.[57X[74G(0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[10d   (0[0;1m[37m[47mx(B[0m[30m[47m (0[0m[30m[47mlqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq(0[0;1m[37m[47mk(B[0m[30m[47m (0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[11d   (0[0;1m[37m[47mx(B[0m[30m[47m (0[0m[30m[47mx(B[0m[30m[47m (B[0;1m[37m[44m(*)(B[0m[30m[47m (B[0;1m[31m[44mM[33m[44mirror group(B[0m[30m[47m   (B[0;1m[37m[44mRotate between several mirrors (recommended)(B[0m[30m[47m (0[0;1m[37m[47mx(B[0m[30m[47m (0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[12d   (0[0;1m[37m[47mx(B[0m[30m[47m (0[0m[30m[47mm(0[0;1m[37m[47mqqqqq(B[0;1m[32m[47m↓(+)(0[0;1m[37m[47mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq(B[0;1m[34m[47m50%(0[0;1m[37m[47mqqqqqj(B[0m[30m[47m (0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[13d   (0[0;1m[37m[47mx(B[0m[30m[47m[69X[74G(0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[14d   (0[0;1m[37m[47mtqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq(0[0m[30m[47mu(B[0;1m[30m[40m  [36m[44m[K[15d   (0[0;1m[37m[47mx(B[0m[30m[47m[69X[74G(0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[16d   (0[0;1m[37m[47mm(0[0m[30m[47mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj(B[0;1m[30m[40m  [36m[44m[K[17;5H[1K [30m[40m[71X[77G[36m[44m[K[12;67H[39;49m(B[m[15;26H(B[0;1m[37m[44m<[33m[44m  OK  [37m[44m>[15;45H(B[0m[30m[47m<(B[0;1m[30m[47mCancel(B[0m[30m[47m>[15;29H[39;49m(B[m[7d(B[0;1m[36m[44m[J[24;80H[39;49m(B[m[?1006;1000l[24;1H[?1049l[23;0;0t[?1l>[H[2J[3J
+#6 DONE 0.4s
+
+#7 [builder 2/7] RUN pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static
+#7 0.246 No mirror or mirror group selected. You might want to select one by running 'termux-change-repo'
+#7 0.255 Testing the available mirrors:
+#7 1.185 [*] (10) https://packages-cf.termux.dev/apt/termux-main: ok
+#7 1.185 [*] (1) https://mirror.jeonnam.school/termux/termux-main: ok
+#7 1.185 [*] (1) https://mirror.albony.in/termux/termux-main: ok
+#7 1.185 [*] (1) https://linux.domainesia.com/applications/termux/termux-main: ok
+#7 1.185 [*] (1) https://mirror.bardia.tech/termux/termux-main: bad
+#7 1.185 [*] (1) https://tmx.xvx.my.id/apt/termux-main: ok
+#7 1.185 [*] (1) https://mirror.nevacloud.com/applications/termux/termux-main: ok
+#7 1.185 [*] (1) https://termux.niranjan.co/termux-main: ok
+#7 1.185 [*] (1) https://mirror.twds.com.tw/termux/termux-main: ok
+#7 1.185 [*] (1) https://mirror.freedif.org/termux/termux-main: ok
+#7 2.773 [*] (1) https://mirrors.cbrx.io/apt/termux/termux-main: ok
+#7 2.773 [*] (1) https://mirrors.ravidwivedi.in/termux/termux-main: ok
+#7 2.773 [*] (1) https://mirrors.in.sahilister.net/termux/termux-main/: ok
+#7 2.773 [*] (1) https://mirrors.krnk.org/apt/termux/termux-main: ok
+#7 2.773 [*] (1) https://mirror.meowsmp.net/termux/termux-main: bad
+#7 2.773 [*] (1) https://mirror.textcord.xyz/termux/termux-main: bad
+#7 2.773 [*] (1) https://mirrors.saswata.cc/termux/termux-main: bad
+#7 2.773 [*] (1) https://mirror.rinarin.dev/termux/termux-main: ok
+#7 2.773 [*] (1) https://mirrors.nguyenhoang.cloud/termux/termux-main: ok
+#7 2.773 [*] (1) https://mirrors.sau.edu.cn/termux/apt/termux-main: ok
+#7 7.796 [*] (1) https://mirrors.cernet.edu.cn/termux/apt/termux-main: ok
+#7 7.796 [*] (1) https://mirrors.sdu.edu.cn/termux/termux-main: bad
+#7 7.796 [*] (1) https://mirrors.aliyun.com/termux/termux-main: ok
+#7 7.796 [*] (1) https://mirror.nyist.edu.cn/termux/apt/termux-main: ok
+#7 7.796 [*] (1) https://mirrors.bfsu.edu.cn/termux/apt/termux-main: ok
+#7 7.796 [*] (1) https://mirrors.pku.edu.cn/termux/termux-main/: bad
+#7 7.796 [*] (1) https://mirrors.cqupt.edu.cn/termux/termux-main: ok
+#7 7.797 [*] (1) https://mirrors.tuna.tsinghua.edu.cn/termux/apt/termux-main: ok
+#7 7.797 [*] (1) https://mirrors.zju.edu.cn/termux/apt/termux-main: ok
+#7 7.797 [*] (1) https://mirror.iscas.ac.cn/termux/apt/termux-main: ok
+#7 ...
+
+#8 [runtime 3/7] RUN pkg update && pkg install -y tar file
+#8 0.251 No mirror or mirror group selected. You might want to select one by running 'termux-change-repo'
+#8 0.260 Testing the available mirrors:
+#8 1.193 [*] (10) https://packages-cf.termux.dev/apt/termux-main: ok
+#8 1.193 [*] (1) https://mirror.jeonnam.school/termux/termux-main: ok
+#8 1.193 [*] (1) https://mirror.albony.in/termux/termux-main: ok
+#8 1.193 [*] (1) https://linux.domainesia.com/applications/termux/termux-main: ok
+#8 1.193 [*] (1) https://mirror.bardia.tech/termux/termux-main: bad
+#8 1.193 [*] (1) https://tmx.xvx.my.id/apt/termux-main: ok
+#8 1.193 [*] (1) https://mirror.nevacloud.com/applications/termux/termux-main: ok
+#8 1.193 [*] (1) https://termux.niranjan.co/termux-main: ok
+#8 1.193 [*] (1) https://mirror.twds.com.tw/termux/termux-main: ok
+#8 1.193 [*] (1) https://mirror.freedif.org/termux/termux-main: ok
+#8 6.231 [*] (1) https://mirrors.cbrx.io/apt/termux/termux-main: ok
+#8 6.231 [*] (1) https://mirrors.ravidwivedi.in/termux/termux-main: ok
+#8 6.231 [*] (1) https://mirrors.in.sahilister.net/termux/termux-main/: ok
+#8 6.231 [*] (1) https://mirrors.krnk.org/apt/termux/termux-main: ok
+#8 6.231 [*] (1) https://mirror.meowsmp.net/termux/termux-main: bad
+#8 6.231 [*] (1) https://mirror.textcord.xyz/termux/termux-main: bad
+#8 6.231 [*] (1) https://mirrors.saswata.cc/termux/termux-main: bad
+#8 6.231 [*] (1) https://mirror.rinarin.dev/termux/termux-main: ok
+#8 6.231 [*] (1) https://mirrors.nguyenhoang.cloud/termux/termux-main: ok
+#8 6.231 [*] (1) https://mirrors.sau.edu.cn/termux/apt/termux-main: bad
+#8 11.27 [*] (1) https://mirrors.cernet.edu.cn/termux/apt/termux-main: ok
+#8 11.27 [*] (1) https://mirrors.sdu.edu.cn/termux/termux-main: ok
+#8 11.27 [*] (1) https://mirrors.aliyun.com/termux/termux-main: ok
+#8 11.27 [*] (1) https://mirror.nyist.edu.cn/termux/apt/termux-main: ok
+#8 11.27 [*] (1) https://mirrors.bfsu.edu.cn/termux/apt/termux-main: ok
+#8 11.27 [*] (1) https://mirrors.pku.edu.cn/termux/termux-main/: ok
+#8 11.27 [*] (1) https://mirrors.cqupt.edu.cn/termux/termux-main: bad
+#8 11.27 [*] (1) https://mirrors.tuna.tsinghua.edu.cn/termux/apt/termux-main: ok
+#8 11.27 [*] (1) https://mirrors.zju.edu.cn/termux/apt/termux-main: bad
+#8 11.27 [*] (1) https://mirror.iscas.ac.cn/termux/apt/termux-main: ok
+#8 ...
+
+#7 [builder 2/7] RUN pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static
+#7 12.83 [*] (1) https://mirrors.nju.edu.cn/termux/apt/termux-main: ok
+#7 12.83 [*] (1) https://mirror.sjtu.edu.cn/termux/termux-main/: ok
+#7 12.83 [*] (1) https://mirrors.hust.edu.cn/termux/apt/termux-main: ok
+#7 12.83 [*] (1) https://mirrors.ustc.edu.cn/termux/termux-main: ok
+#7 12.83 [*] (1) https://mirrors.sustech.edu.cn/termux/apt/termux-main: ok
+#7 12.83 [*] (1) https://mirror.termux.dev/termux-main: bad
+#7 12.83 [*] (1) https://packages.termux.dev/apt/termux-main: ok
+#7 12.83 [*] (1) https://mirror.mwt.me/termux/main: ok
+#7 12.83 [*] (1) https://ftp.fau.de/termux/termux-main: ok
+#7 12.83 [*] (1) https://termux.cdn.lumito.net/termux-main: ok
+#7 17.84 [*] (1) https://mirrors.de.sahilister.net/termux/termux-main: ok
+#7 17.84 [*] (1) https://mirror.leitecastro.com/termux/termux-main: bad
+#7 17.84 [*] (1) https://is.mirror.flokinet.net/termux/termux-main: ok
+#7 17.84 [*] (1) https://termux.mentality.rip/termux-main: bad
+#7 17.84 [*] (1) https://nl.mirror.flokinet.net/termux/termux-main: ok
+#7 17.84 [*] (4) https://grimler.se/termux/termux-main: ok
+#7 17.84 [*] (1) https://md.mirrors.hacktegic.com/termux/termux-main: bad
+#7 17.84 [*] (1) https://mirror.bouwhuis.network/termux/termux-main: ok
+#7 17.84 [*] (1) https://mirror.accum.se/mirror/termux.dev/termux-main: ok
+#7 17.84 [*] (1) https://mirrors.cfe.re/termux/termux-main: bad
+#7 19.30 [*] (1) https://ftp.agdsn.de/termux/termux-main: ok
+#7 19.30 [*] (1) https://mirror.sunred.org/termux/termux-main: ok
+#7 19.30 [*] (1) https://ro.mirror.flokinet.net/termux/termux-main: ok
+#7 19.30 [*] (1) https://mirror.autkin.net/termux/termux-main: ok
+#7 19.30 [*] (1) https://mirrors.medzik.dev/termux/termux-main: bad
+#7 19.30 [*] (1) https://termux.3san.dev/termux/termux-main: ok
+#7 19.30 [*] (1) https://mirror.polido.pt/termux/termux-main: bad
+#7 19.30 [*] (1) https://termux.librehat.com/apt/termux-main: ok
+#7 19.30 [*] (1) https://mirror.quantum5.ca/termux/termux-main: ok
+#7 19.30 [*] (1) https://gnlug.org/pub/termux/termux-main: ok
+#7 21.26 [*] (1) https://mirror.mwt.me/termux/main: ok
+#7 21.26 [*] (1) https://mirror.csclub.uwaterloo.ca/termux/termux-main: ok
+#7 21.26 [*] (1) https://mirror.fcix.net/termux/termux-main: ok
+#7 21.26 [*] (1) https://termux.danyael.xyz/termux/termux-main: ok
+#7 21.26 [*] (1) https://dl.kcubeterm.com/termux-main: bad
+#7 21.26 [*] (1) https://mirror.vern.cc/termux/termux-main: ok
+#7 21.26 [*] (1) https://plug-mirror.rcac.purdue.edu/termux/termux-main: ok
+#7 21.26 [*] (1) https://mirrors.utermux.dev/termux/termux-main: ok
+#7 21.26 [*] (1) https://mirrors.middlendian.com/termux/termux-main: ok
+#7 21.26 [*] (1) http://mirror.mephi.ru/termux/termux-main: ok
+#7 21.98 [*] (1) https://repository.su/termux/termux-main/: ok
+#7 22.03 Picking mirror: (32) /data/data/com.termux/files/usr/etc/termux/mirrors/chinese_mainland/mirror.iscas.ac.cn
+#7 22.07 
+#7 22.07 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#7 22.07 
+#7 ...
+
+#8 [runtime 3/7] RUN pkg update && pkg install -y tar file
+#8 16.30 [*] (1) https://mirrors.nju.edu.cn/termux/apt/termux-main: ok
+#8 16.30 [*] (1) https://mirror.sjtu.edu.cn/termux/termux-main/: ok
+#8 16.30 [*] (1) https://mirrors.hust.edu.cn/termux/apt/termux-main: ok
+#8 16.30 [*] (1) https://mirrors.ustc.edu.cn/termux/termux-main: ok
+#8 16.30 [*] (1) https://mirrors.sustech.edu.cn/termux/apt/termux-main: ok
+#8 16.30 [*] (1) https://mirror.termux.dev/termux-main: bad
+#8 16.30 [*] (1) https://packages.termux.dev/apt/termux-main: ok
+#8 16.30 [*] (1) https://mirror.mwt.me/termux/main: ok
+#8 16.30 [*] (1) https://ftp.fau.de/termux/termux-main: ok
+#8 16.30 [*] (1) https://termux.cdn.lumito.net/termux-main: ok
+#8 21.32 [*] (1) https://mirrors.de.sahilister.net/termux/termux-main: ok
+#8 21.32 [*] (1) https://mirror.leitecastro.com/termux/termux-main: bad
+#8 21.32 [*] (1) https://is.mirror.flokinet.net/termux/termux-main: ok
+#8 21.32 [*] (1) https://termux.mentality.rip/termux-main: bad
+#8 21.32 [*] (1) https://nl.mirror.flokinet.net/termux/termux-main: ok
+#8 21.32 [*] (4) https://grimler.se/termux/termux-main: ok
+#8 21.32 [*] (1) https://md.mirrors.hacktegic.com/termux/termux-main: bad
+#8 21.32 [*] (1) https://mirror.bouwhuis.network/termux/termux-main: ok
+#8 21.32 [*] (1) https://mirror.accum.se/mirror/termux.dev/termux-main: ok
+#8 21.32 [*] (1) https://mirrors.cfe.re/termux/termux-main: bad
+#8 22.07 [*] (1) https://ftp.agdsn.de/termux/termux-main: ok
+#8 22.07 [*] (1) https://mirror.sunred.org/termux/termux-main: ok
+#8 22.07 [*] (1) https://ro.mirror.flokinet.net/termux/termux-main: ok
+#8 22.07 [*] (1) https://mirror.autkin.net/termux/termux-main: ok
+#8 22.07 [*] (1) https://mirrors.medzik.dev/termux/termux-main: bad
+#8 22.07 [*] (1) https://termux.3san.dev/termux/termux-main: ok
+#8 22.07 [*] (1) https://mirror.polido.pt/termux/termux-main: bad
+#8 22.07 [*] (1) https://termux.librehat.com/apt/termux-main: ok
+#8 22.07 [*] (1) https://mirror.quantum5.ca/termux/termux-main: ok
+#8 22.07 [*] (1) https://gnlug.org/pub/termux/termux-main: ok
+#8 23.23 [*] (1) https://mirror.mwt.me/termux/main: ok
+#8 23.23 [*] (1) https://mirror.csclub.uwaterloo.ca/termux/termux-main: ok
+#8 23.23 [*] (1) https://mirror.fcix.net/termux/termux-main: ok
+#8 23.23 [*] (1) https://termux.danyael.xyz/termux/termux-main: ok
+#8 23.23 [*] (1) https://dl.kcubeterm.com/termux-main: bad
+#8 23.23 [*] (1) https://mirror.vern.cc/termux/termux-main: ok
+#8 23.23 [*] (1) https://plug-mirror.rcac.purdue.edu/termux/termux-main: ok
+#8 23.23 [*] (1) https://mirrors.utermux.dev/termux/termux-main: ok
+#8 23.23 [*] (1) https://mirrors.middlendian.com/termux/termux-main: ok
+#8 23.23 [*] (1) http://mirror.mephi.ru/termux/termux-main: ok
+#8 23.92 [*] (1) https://repository.su/termux/termux-main/: ok
+#8 23.96 Picking mirror: (27) /data/data/com.termux/files/usr/etc/termux/mirrors/chinese_mainland/mirror.nyist.edu.cn
+#8 24.01 
+#8 24.01 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#8 24.01 
+#8 25.34 Get:1 https://mirror.nyist.edu.cn/termux/apt/termux-main stable InRelease [14.0 kB]
+#8 25.82 Get:2 https://mirror.nyist.edu.cn/termux/apt/termux-main stable/main aarch64 Packages [553 kB]
+#8 ...
+
+#7 [builder 2/7] RUN pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static
+#7 26.42 Get:1 https://mirror.iscas.ac.cn/termux/apt/termux-main stable InRelease [14.0 kB]
+#7 26.85 Get:2 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 Packages [552 kB]
+#7 28.28 Fetched 566 kB in 6s (91.7 kB/s)
+#7 28.28 Reading package lists...
+#7 28.31 Building dependency tree...
+#7 28.31 1 package can be upgraded. Run 'apt list --upgradable' to see it.
+#7 28.32 No mirror or mirror group selected. You might want to select one by running 'termux-change-repo'
+#7 28.34 Checking availability of current mirror:
+#7 28.34 [*] https://mirror.iscas.ac.cn/termux/apt/termux-main: ok
+#7 30.63 
+#7 30.63 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#7 30.63 
+#7 30.65 Reading package lists...
+#7 30.65 Building dependency tree...
+#7 30.66 bash is already the newest version (5.3.9-1).
+#7 30.66 curl is already the newest version (8.21.0).
+#7 30.66 unzip is already the newest version (6.0-10).
+#7 30.66 patch is already the newest version (2.8-1).
+#7 30.66 coreutils is already the newest version (9.11-1).
+#7 30.66 The following additional packages will be installed:
+#7 30.66   gdbm glib jsoncpp krb5 ldns libandroid-spawn libandroid-utimes libarchive
+#7 30.66   libcompiler-rt libcrypt libdb libedit libexpat libffi libicu libllvm libltdl
+#7 30.66   libresolv-wrapper libsqlite libuv libxml2 lld llvm m4 ncurses-ui-libs
+#7 30.66   ndk-sysroot openssh openssh-sftp-server perl python python-ensurepip-wheels
+#7 30.66   python-pip rhash termux-auth
+#7 30.66 Suggested packages:
+#7 30.66   termux-services python-tkinter
+#7 30.67 The following NEW packages will be installed:
+#7 30.67   autoconf automake clang cmake file gdbm gettext git glib jsoncpp krb5 ldns
+#7 30.67   libandroid-spawn libandroid-utimes libarchive libcompiler-rt libcrypt libdb
+#7 30.67   libedit libexpat libffi libiconv-static libicu libllvm libltdl
+#7 30.67   libresolv-wrapper libsqlite libtool libuv libxml2 lld llvm m4 make
+#7 30.67   ncurses-ui-libs ndk-sysroot ninja openssh openssh-sftp-server perl
+#7 30.67   pkg-config python python-ensurepip-wheels python-pip rhash termux-auth
+#7 33.44 0 upgraded, 46 newly installed, 0 to remove and 1 not upgraded.
+#7 33.44 Need to get 146 MB of archives.
+#7 33.44 After this operation, 860 MB of additional disk space will be used.
+#7 33.44 Get:1 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 m4 aarch64 1.4.19-5 [191 kB]
+#7 34.66 Get:2 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 make aarch64 4.4.1-1 [240 kB]
+#7 35.15 Get:3 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libandroid-utimes aarch64 0.4 [3120 B]
+#7 35.15 Get:4 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 perl aarch64 5.42.0 [15.1 MB]
+#7 ...
+
+#8 [runtime 3/7] RUN pkg update && pkg install -y tar file
+#8 27.25 Fetched 567 kB in 3s (176 kB/s)
+#8 27.25 Reading package lists...
+#8 27.28 Building dependency tree...
+#8 27.29 1 package can be upgraded. Run 'apt list --upgradable' to see it.
+#8 27.30 No mirror or mirror group selected. You might want to select one by running 'termux-change-repo'
+#8 27.32 Checking availability of current mirror:
+#8 27.32 [*] https://mirror.nyist.edu.cn/termux/apt/termux-main: ok
+#8 31.33 
+#8 31.33 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#8 31.33 
+#8 31.35 Reading package lists...
+#8 31.35 Building dependency tree...
+#8 31.36 tar is already the newest version (1.35-2).
+#8 31.36 The following NEW packages will be installed:
+#8 31.36   file
+#8 33.48 0 upgraded, 1 newly installed, 0 to remove and 1 not upgraded.
+#8 33.48 Need to get 412 kB of archives.
+#8 33.48 After this operation, 11.1 MB of additional disk space will be used.
+#8 33.48 Get:1 https://mirror.nyist.edu.cn/termux/apt/termux-main stable/main aarch64 file aarch64 5.48-1 [412 kB]
+#8 34.82 Fetched 412 kB in 3s (120 kB/s)
+#8 34.86 Selecting previously unselected package file.
+#8 34.86 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4864 files and directories currently installed.)
+#8 34.86 Preparing to unpack .../file_5.48-1_aarch64.deb ...
+#8 34.87 Unpacking file (5.48-1) ...
+#8 35.07 Setting up file (5.48-1) ...
+#8 DONE 35.2s
+
+#7 [builder 2/7] RUN pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static
+#7 ...
+
+#9 [runtime 4/7] RUN mkdir -p /data/data/com.termux/files/home/out
+#9 DONE 0.3s
+
+#7 [builder 2/7] RUN pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static
+#7 37.83 Get:5 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 autoconf all 2.73 [625 kB]
+#7 37.84 Get:6 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 automake all 1.18.1 [577 kB]
+#7 37.85 Get:7 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libcompiler-rt aarch64 21.1.8-3 [3025 kB]
+#7 38.09 Get:8 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libffi aarch64 3.5.2 [31.1 kB]
+#7 38.10 Get:9 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libicu aarch64 78.3 [10.2 MB]
+#7 38.65 Get:10 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libxml2 aarch64 2.15.3-2 [442 kB]
+#7 38.66 Get:11 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libllvm aarch64 21.1.8-3 [30.7 MB]
+#7 44.32 Get:12 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 lld aarch64 21.1.8-3 [2812 kB]
+#7 44.54 Get:13 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 llvm aarch64 21.1.8-3 [14.9 MB]
+#7 45.29 Get:14 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 ndk-sysroot aarch64 29-2 [1952 kB]
+#7 45.53 Get:15 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 clang aarch64 21.1.8-3 [30.7 MB]
+#7 47.50 Get:16 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libarchive aarch64 3.8.8 [393 kB]
+#7 47.51 Get:17 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libexpat aarch64 2.8.2 [95.5 kB]
+#7 47.52 Get:18 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 jsoncpp aarch64 1.9.8 [96.1 kB]
+#7 47.53 Get:19 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libuv aarch64 1.52.1 [81.9 kB]
+#7 47.53 Get:20 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 rhash aarch64 1.4.6-1 [163 kB]
+#7 47.54 Get:21 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 cmake aarch64 4.3.4 [10.2 MB]
+#7 48.27 Get:22 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 file aarch64 5.48-1 [412 kB]
+#7 48.28 Get:23 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 gdbm aarch64 1.26-1 [150 kB]
+#7 48.29 Get:24 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 gettext aarch64 1.0 [3003 kB]
+#7 48.31 Get:25 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 git aarch64 2.55.0 [4487 kB]
+#7 48.79 Get:26 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libcrypt aarch64 0.2-6 [8880 B]
+#7 48.79 Get:27 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libsqlite aarch64 3.53.3 [759 kB]
+#7 48.80 Get:28 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 ncurses-ui-libs aarch64 6.6.20260307+really6.5.20250830 [32.9 kB]
+#7 48.81 Get:29 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 python aarch64 3.14.6-1 [4817 kB]
+#7 49.07 Get:30 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 glib aarch64 2.88.2-1 [2559 kB]
+#7 49.31 Get:31 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libresolv-wrapper aarch64 1.1.7-6 [11.5 kB]
+#7 49.31 Get:32 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libdb aarch64 18.1.40-5 [509 kB]
+#7 49.32 Get:33 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 krb5 aarch64 1.22.2 [902 kB]
+#7 49.34 Get:34 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 ldns aarch64 1.8.4-1 [303 kB]
+#7 49.35 Get:35 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libandroid-spawn aarch64 0.3 [15.2 kB]
+#7 50.01 Get:36 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libedit aarch64 20240517-3.1-1 [79.1 kB]
+#7 50.02 Get:37 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libiconv-static aarch64 1.18-1 [558 kB]
+#7 50.03 Get:38 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libltdl aarch64 2.5.4-2 [18.0 kB]
+#7 50.04 Get:39 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 libtool aarch64 2.5.4-2 [392 kB]
+#7 50.05 Get:40 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 ninja aarch64 1.13.2 [84.0 kB]
+#7 50.05 Get:41 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 openssh-sftp-server aarch64 10.4p1 [56.4 kB]
+#7 50.06 Get:42 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 termux-auth aarch64 1.5.0-1 [6996 B]
+#7 50.06 Get:43 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 openssh aarch64 10.4p1 [961 kB]
+#7 50.08 Get:44 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 pkg-config aarch64 0.29.2-3 [32.8 kB]
+#7 50.08 Get:45 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 python-ensurepip-wheels all 3.14.6-1 [1740 kB]
+#7 50.27 Get:46 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main aarch64 python-pip all 26.1.2-1 [1190 kB]
+#7 50.35 Fetched 146 MB in 20s (7413 kB/s)
+#7 50.39 Selecting previously unselected package m4.
+#7 50.39 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4864 files and directories currently installed.)
+#7 50.39 Preparing to unpack .../00-m4_1.4.19-5_aarch64.deb ...
+#7 50.41 Unpacking m4 (1.4.19-5) ...
+#7 50.56 Selecting previously unselected package make.
+#7 50.56 Preparing to unpack .../01-make_4.4.1-1_aarch64.deb ...
+#7 50.57 Unpacking make (4.4.1-1) ...
+#7 50.69 Selecting previously unselected package libandroid-utimes.
+#7 50.69 Preparing to unpack .../02-libandroid-utimes_0.4_aarch64.deb ...
+#7 50.71 Unpacking libandroid-utimes (0.4) ...
+#7 50.81 Selecting previously unselected package perl.
+#7 50.81 Preparing to unpack .../03-perl_5.42.0_aarch64.deb ...
+#7 50.83 Unpacking perl (5.42.0) ...
+#7 51.72 Selecting previously unselected package autoconf.
+#7 51.73 Preparing to unpack .../04-autoconf_2.73_all.deb ...
+#7 51.74 Unpacking autoconf (2.73) ...
+#7 51.87 Selecting previously unselected package automake.
+#7 51.87 Preparing to unpack .../05-automake_1.18.1_all.deb ...
+#7 51.89 Unpacking automake (1.18.1) ...
+#7 52.04 Selecting previously unselected package libcompiler-rt.
+#7 52.04 Preparing to unpack .../06-libcompiler-rt_21.1.8-3_aarch64.deb ...
+#7 52.05 Unpacking libcompiler-rt (21.1.8-3) ...
+#7 52.32 Selecting previously unselected package libffi.
+#7 52.32 Preparing to unpack .../07-libffi_3.5.2_aarch64.deb ...
+#7 52.33 Unpacking libffi (3.5.2) ...
+#7 52.44 Selecting previously unselected package libicu.
+#7 52.44 Preparing to unpack .../08-libicu_78.3_aarch64.deb ...
+#7 52.46 Unpacking libicu (78.3) ...
+#7 53.09 Selecting previously unselected package libxml2.
+#7 53.09 Preparing to unpack .../09-libxml2_2.15.3-2_aarch64.deb ...
+#7 53.11 Unpacking libxml2 (2.15.3-2) ...
+#7 53.23 Selecting previously unselected package libllvm.
+#7 53.23 Preparing to unpack .../10-libllvm_21.1.8-3_aarch64.deb ...
+#7 53.24 Unpacking libllvm (21.1.8-3) ...
+#7 54.88 Selecting previously unselected package lld.
+#7 54.88 Preparing to unpack .../11-lld_21.1.8-3_aarch64.deb ...
+#7 54.90 Unpacking lld (21.1.8-3) ...
+#7 55.14 Selecting previously unselected package llvm.
+#7 55.14 Preparing to unpack .../12-llvm_21.1.8-3_aarch64.deb ...
+#7 55.15 Unpacking llvm (21.1.8-3) ...
+#7 55.84 Selecting previously unselected package ndk-sysroot.
+#7 55.85 Preparing to unpack .../13-ndk-sysroot_29-2_aarch64.deb ...
+#7 55.86 Unpacking ndk-sysroot (29-2) ...
+#7 56.92 Selecting previously unselected package clang.
+#7 56.92 Preparing to unpack .../14-clang_21.1.8-3_aarch64.deb ...
+#7 56.94 Unpacking clang (21.1.8-3) ...
+#7 58.44 Selecting previously unselected package libarchive.
+#7 58.44 Preparing to unpack .../15-libarchive_3.8.8_aarch64.deb ...
+#7 58.46 Unpacking libarchive (3.8.8) ...
+#7 58.58 Selecting previously unselected package libexpat.
+#7 58.59 Preparing to unpack .../16-libexpat_2.8.2_aarch64.deb ...
+#7 58.60 Unpacking libexpat (2.8.2) ...
+#7 58.72 Selecting previously unselected package jsoncpp.
+#7 58.72 Preparing to unpack .../17-jsoncpp_1.9.8_aarch64.deb ...
+#7 58.73 Unpacking jsoncpp (1.9.8) ...
+#7 58.84 Selecting previously unselected package libuv.
+#7 58.84 Preparing to unpack .../18-libuv_1.52.1_aarch64.deb ...
+#7 58.86 Unpacking libuv (1.52.1) ...
+#7 58.96 Selecting previously unselected package rhash.
+#7 58.96 Preparing to unpack .../19-rhash_1.4.6-1_aarch64.deb ...
+#7 58.97 Unpacking rhash (1.4.6-1) ...
+#7 59.08 Selecting previously unselected package cmake.
+#7 59.09 Preparing to unpack .../20-cmake_4.3.4_aarch64.deb ...
+#7 59.10 Unpacking cmake (4.3.4) ...
+#7 60.69 Selecting previously unselected package file.
+#7 60.69 Preparing to unpack .../21-file_5.48-1_aarch64.deb ...
+#7 60.71 Unpacking file (5.48-1) ...
+#7 60.85 Selecting previously unselected package gdbm.
+#7 60.85 Preparing to unpack .../22-gdbm_1.26-1_aarch64.deb ...
+#7 60.87 Unpacking gdbm (1.26-1) ...
+#7 60.97 Selecting previously unselected package gettext.
+#7 60.98 Preparing to unpack .../23-gettext_1.0_aarch64.deb ...
+#7 60.99 Unpacking gettext (1.0) ...
+#7 61.85 Selecting previously unselected package git.
+#7 61.85 Preparing to unpack .../24-git_2.55.0_aarch64.deb ...
+#7 61.87 Unpacking git (2.55.0) ...
+#7 62.18 Selecting previously unselected package libcrypt.
+#7 62.18 Preparing to unpack .../25-libcrypt_0.2-6_aarch64.deb ...
+#7 62.19 Unpacking libcrypt (0.2-6) ...
+#7 62.30 Selecting previously unselected package libsqlite.
+#7 62.30 Preparing to unpack .../26-libsqlite_3.53.3_aarch64.deb ...
+#7 62.32 Unpacking libsqlite (3.53.3) ...
+#7 62.45 Selecting previously unselected package ncurses-ui-libs.
+#7 62.46 Preparing to unpack .../27-ncurses-ui-libs_6.6.20260307+really6.5.20250830_aarch64.deb ...
+#7 62.47 Unpacking ncurses-ui-libs (6.6.20260307+really6.5.20250830) ...
+#7 62.59 Selecting previously unselected package python.
+#7 62.59 Preparing to unpack .../28-python_3.14.6-1_aarch64.deb ...
+#7 62.61 Unpacking python (3.14.6-1) ...
+#7 62.97 Selecting previously unselected package glib.
+#7 62.98 Preparing to unpack .../29-glib_2.88.2-1_aarch64.deb ...
+#7 62.99 Unpacking glib (2.88.2-1) ...
+#7 63.25 Selecting previously unselected package libresolv-wrapper.
+#7 63.25 Preparing to unpack .../30-libresolv-wrapper_1.1.7-6_aarch64.deb ...
+#7 63.26 Unpacking libresolv-wrapper (1.1.7-6) ...
+#7 63.36 Selecting previously unselected package libdb.
+#7 63.37 Preparing to unpack .../31-libdb_18.1.40-5_aarch64.deb ...
+#7 63.38 Unpacking libdb (18.1.40-5) ...
+#7 63.52 Selecting previously unselected package krb5.
+#7 63.52 Preparing to unpack .../32-krb5_1.22.2_aarch64.deb ...
+#7 63.54 Unpacking krb5 (1.22.2) ...
+#7 63.69 Selecting previously unselected package ldns.
+#7 63.69 Preparing to unpack .../33-ldns_1.8.4-1_aarch64.deb ...
+#7 63.71 Unpacking ldns (1.8.4-1) ...
+#7 63.86 Selecting previously unselected package libandroid-spawn.
+#7 63.86 Preparing to unpack .../34-libandroid-spawn_0.3_aarch64.deb ...
+#7 63.88 Unpacking libandroid-spawn (0.3) ...
+#7 63.98 Selecting previously unselected package libedit.
+#7 63.98 Preparing to unpack .../35-libedit_20240517-3.1-1_aarch64.deb ...
+#7 64.00 Unpacking libedit (20240517-3.1-1) ...
+#7 64.10 Selecting previously unselected package libiconv-static.
+#7 64.10 Preparing to unpack .../36-libiconv-static_1.18-1_aarch64.deb ...
+#7 64.12 Unpacking libiconv-static (1.18-1) ...
+#7 64.24 Selecting previously unselected package libltdl.
+#7 64.24 Preparing to unpack .../37-libltdl_2.5.4-2_aarch64.deb ...
+#7 64.26 Unpacking libltdl (2.5.4-2) ...
+#7 64.36 Selecting previously unselected package libtool.
+#7 64.36 Preparing to unpack .../38-libtool_2.5.4-2_aarch64.deb ...
+#7 64.38 Unpacking libtool (2.5.4-2) ...
+#7 64.50 Selecting previously unselected package ninja.
+#7 64.50 Preparing to unpack .../39-ninja_1.13.2_aarch64.deb ...
+#7 64.51 Unpacking ninja (1.13.2) ...
+#7 64.61 Selecting previously unselected package openssh-sftp-server.
+#7 64.62 Preparing to unpack .../40-openssh-sftp-server_10.4p1_aarch64.deb ...
+#7 64.63 Unpacking openssh-sftp-server (10.4p1) ...
+#7 64.73 Selecting previously unselected package termux-auth.
+#7 64.73 Preparing to unpack .../41-termux-auth_1.5.0-1_aarch64.deb ...
+#7 64.74 Unpacking termux-auth (1.5.0-1) ...
+#7 64.86 Selecting previously unselected package openssh.
+#7 64.86 Preparing to unpack .../42-openssh_10.4p1_aarch64.deb ...
+#7 64.87 Unpacking openssh (10.4p1) ...
+#7 65.03 Selecting previously unselected package pkg-config.
+#7 65.03 Preparing to unpack .../43-pkg-config_0.29.2-3_aarch64.deb ...
+#7 65.05 Unpacking pkg-config (0.29.2-3) ...
+#7 65.15 Selecting previously unselected package python-ensurepip-wheels.
+#7 65.15 Preparing to unpack .../44-python-ensurepip-wheels_3.14.6-1_all.deb ...
+#7 65.17 Unpacking python-ensurepip-wheels (3.14.6-1) ...
+#7 65.31 Selecting previously unselected package python-pip.
+#7 65.31 Preparing to unpack .../45-python-pip_26.1.2-1_all.deb ...
+#7 65.33 Unpacking python-pip (26.1.2-1) ...
+#7 65.52 Setting up libedit (20240517-3.1-1) ...
+#7 65.56 Setting up openssh-sftp-server (10.4p1) ...
+#7 65.60 Setting up libuv (1.52.1) ...
+#7 65.65 Setting up rhash (1.4.6-1) ...
+#7 65.70 Setting up libiconv-static (1.18-1) ...
+#7 65.74 Setting up libandroid-utimes (0.4) ...
+#7 65.78 Setting up gdbm (1.26-1) ...
+#7 65.82 Setting up ldns (1.8.4-1) ...
+#7 65.86 Setting up ndk-sysroot (29-2) ...
+#7 65.90 Setting up m4 (1.4.19-5) ...
+#7 65.94 Setting up file (5.48-1) ...
+#7 65.98 Setting up libexpat (2.8.2) ...
+#7 66.02 Setting up libicu (78.3) ...
+#7 66.06 Setting up libandroid-spawn (0.3) ...
+#7 66.10 Setting up libsqlite (3.53.3) ...
+#7 66.14 Setting up libffi (3.5.2) ...
+#7 66.18 Setting up libcrypt (0.2-6) ...
+#7 66.22 Setting up ncurses-ui-libs (6.6.20260307+really6.5.20250830) ...
+#7 66.26 Setting up perl (5.42.0) ...
+#7 66.30 Setting up libltdl (2.5.4-2) ...
+#7 66.34 Setting up make (4.4.1-1) ...
+#7 66.38 Setting up libcompiler-rt (21.1.8-3) ...
+#7 66.42 Setting up git (2.55.0) ...
+#7 66.46 Setting up autoconf (2.73) ...
+#7 66.51 Setting up libresolv-wrapper (1.1.7-6) ...
+#7 66.55 Setting up termux-auth (1.5.0-1) ...
+#7 66.59 Setting up ninja (1.13.2) ...
+#7 66.63 Setting up libdb (18.1.40-5) ...
+#7 66.67 Setting up python (3.14.6-1) ...
+#7 68.98 Setting up libxml2 (2.15.3-2) ...
+#7 69.02 Setting up jsoncpp (1.9.8) ...
+#7 69.06 Setting up automake (1.18.1) ...
+#7 69.10 Setting up gettext (1.0) ...
+#7 69.14 Setting up python-ensurepip-wheels (3.14.6-1) ...
+#7 69.18 Setting up libtool (2.5.4-2) ...
+#7 69.22 Setting up libarchive (3.8.8) ...
+#7 69.26 Setting up python-pip (26.1.2-1) ...
+#7 69.29 pip setup...
+#7 69.88 Writing to /data/data/com.termux/files/usr/etc/pip.conf
+#7 70.82 Setting up krb5 (1.22.2) ...
+#7 70.88 Setting up libllvm (21.1.8-3) ...
+#7 70.92 Setting up glib (2.88.2-1) ...
+#7 70.95 No schema files found: doing nothing.
+#7 70.97 Setting up cmake (4.3.4) ...
+#7 71.01 Setting up openssh (10.4p1) ...
+#7 71.10 Generating public/private rsa key pair.
+#7 71.18 Your identification has been saved in /data/data/com.termux/files/usr/etc/ssh/ssh_host_rsa_key
+#7 71.18 Your public key has been saved in /data/data/com.termux/files/usr/etc/ssh/ssh_host_rsa_key.pub
+#7 71.18 The key fingerprint is:
+#7 71.18 SHA256:2S43P00f019v9Nv+Dbc6hcMLrE9JBeLqn1WvssULLBU system@buildkitsandbox
+#7 71.18 The key's randomart image is:
+#7 71.18 +---[RSA 3072]----+
+#7 71.18 |         . .     |
+#7 71.18 |        . . .    |
+#7 71.18 |         . E .   |
+#7 71.18 |        .o  o    |
+#7 71.18 |       .S oo... .|
+#7 71.18 |      .  .+o++o++|
+#7 71.18 |       ...=*.==+O|
+#7 71.18 |        .+=++o+oX|
+#7 71.18 |         o.o+=o=B|
+#7 71.18 +----[SHA256]-----+
+#7 71.19 Generating public/private ecdsa key pair.
+#7 71.19 Your identification has been saved in /data/data/com.termux/files/usr/etc/ssh/ssh_host_ecdsa_key
+#7 71.19 Your public key has been saved in /data/data/com.termux/files/usr/etc/ssh/ssh_host_ecdsa_key.pub
+#7 71.19 The key fingerprint is:
+#7 71.19 SHA256:kjxKB731Qr+79LD2imS6VyHA+QzH0kII42Q6M1OsK9I system@buildkitsandbox
+#7 71.19 The key's randomart image is:
+#7 71.19 +---[ECDSA 256]---+
+#7 71.19 | .*. +.+         |
+#7 71.19 | *....B +        |
+#7 71.19 |*.. . .Oo        |
+#7 71.19 |.=   o =+o.      |
+#7 71.19 | o  . B S.o.     |
+#7 71.19 |+ E. o o ...     |
+#7 71.19 |o   .   o.+      |
+#7 71.19 |       +.o.=     |
+#7 71.19 |      oo..=+o    |
+#7 71.19 +----[SHA256]-----+
+#7 71.19 Generating public/private ed25519 key pair.
+#7 71.19 Your identification has been saved in /data/data/com.termux/files/usr/etc/ssh/ssh_host_ed25519_key
+#7 71.19 Your public key has been saved in /data/data/com.termux/files/usr/etc/ssh/ssh_host_ed25519_key.pub
+#7 71.19 The key fingerprint is:
+#7 71.19 SHA256:MRqkSlzit6JG1ObDN5HyxrZ6IEbmiiUfLrhlaQUljao system@buildkitsandbox
+#7 71.19 The key's randomart image is:
+#7 71.19 +--[ED25519 256]--+
+#7 71.19 |  ooo .          |
+#7 71.19 | oo=.o.          |
+#7 71.19 | o=+oo. o        |
+#7 71.19 |o++++..o o       |
+#7 71.19 |=.o+oB. S        |
+#7 71.19 |E=o== o          |
+#7 71.19 |***...           |
+#7 71.19 |*+o ..           |
+#7 71.19 |.o ..            |
+#7 71.19 +----[SHA256]-----+
+#7 71.19 
+#7 71.19 If you plan to use the 'ssh-agent'
+#7 71.19 it is recommended to run it as a service.
+#7 71.19 Run 'pkg i termux-services'
+#7 71.19 to install the ('runit') service manager
+#7 71.19 
+#7 71.19 You can enable the ssh-agent service
+#7 71.19 using 'sv-enable ssh-agent'
+#7 71.19 You can also enable sshd to autostart
+#7 71.19 using 'sv-enable sshd'
+#7 71.21 Setting up lld (21.1.8-3) ...
+#7 71.25 Setting up pkg-config (0.29.2-3) ...
+#7 71.29 Setting up llvm (21.1.8-3) ...
+#7 71.33 Setting up clang (21.1.8-3) ...
+#7 DONE 71.6s
+
+#10 [builder 3/7] RUN git clone --depth 1 --branch "stable" https://github.com/neovim/neovim.git /data/data/com.termux/files/home/neovim
+#10 0.258 Cloning into '/data/data/com.termux/files/home/neovim'...
+#10 2.979 Note: switching to '68ea43cd0c28af25cd47731308c94fedfcfd1b0b'.
+#10 2.979 
+#10 2.979 You are in 'detached HEAD' state. You can look around, make experimental
+#10 2.979 changes and commit them, and you can discard any commits you make in this
+#10 2.979 state without impacting any branches by switching back to a branch.
+#10 2.979 
+#10 2.979 If you want to create a new branch to retain commits you create, you may
+#10 2.979 do so (now or later) by using -c with the switch command. Example:
+#10 2.979 
+#10 2.979   git switch -c <new-branch-name>
+#10 2.979 
+#10 2.979 Or undo this operation with:
+#10 2.979 
+#10 2.979   git switch -
+#10 2.979 
+#10 2.979 Turn off this advice by setting config variable advice.detachedHead to false
+#10 2.979 
+#10 DONE 3.7s
+
+#11 [builder 4/7] RUN rm -f /data/data/com.termux/files/usr/lib/libiconv.so*
+#11 DONE 0.3s
+
+#12 [builder 5/7] WORKDIR /data/data/com.termux/files/home/neovim
+#12 DONE 0.1s
+
+#13 [builder 6/7] RUN set -e;     for attempt in 1 2 3; do       echo "===== deps build attempt $attempt/3 =====";       if make CMAKE_BUILD_TYPE=Release               CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON"               deps; then         echo "===== deps OK on attempt $attempt =====";         break;       fi;       if [ "$$attempt" = "3" ]; then         echo "::error::deps build failed after 3 attempts";         exit 1;       fi;       echo "deps attempt $attempt failed, retrying in 10s...";       sleep 10;     done
+#13 0.222 ===== deps build attempt 1/3 =====
+#13 0.227 CANNOT LINK EXECUTABLE "cut": library "libiconv.so" not found
+#13 0.227 linker: CANNOT LINK EXECUTABLE "cut": library "libiconv.so" not found
+#13 0.228 mkdir -p ".deps"
+#13 0.230 CANNOT LINK EXECUTABLE "mkdir": library "libiconv.so" not found
+#13 0.230 linker: CANNOT LINK EXECUTABLE "mkdir": library "libiconv.so" not found
+#13 0.230 make: *** [Makefile:122: ".deps"] Error 1
+#13 0.231 deps attempt 1 failed, retrying in 10s...
+#13 0.231 CANNOT LINK EXECUTABLE "sleep": library "libiconv.so" not found
+#13 0.231 linker: CANNOT LINK EXECUTABLE "sleep": library "libiconv.so" not found
+#13 ERROR: process "sh -c set -e;     for attempt in 1 2 3; do       echo \"===== deps build attempt $attempt/3 =====\";       if make CMAKE_BUILD_TYPE=Release               CMAKE_EXTRA_FLAGS=\"-DCMAKE_VERBOSE_MAKEFILE=ON\"               deps; then         echo \"===== deps OK on attempt $attempt =====\";         break;       fi;       if [ \"$$attempt\" = \"3\" ]; then         echo \"::error::deps build failed after 3 attempts\";         exit 1;       fi;       echo \"deps attempt $attempt failed, retrying in 10s...\";       sleep 10;     done" did not complete successfully: exit code: 1
+------
+ > [builder 6/7] RUN set -e;     for attempt in 1 2 3; do       echo "===== deps build attempt $attempt/3 =====";       if make CMAKE_BUILD_TYPE=Release               CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON"               deps; then         echo "===== deps OK on attempt $attempt =====";         break;       fi;       if [ "$$attempt" = "3" ]; then         echo "::error::deps build failed after 3 attempts";         exit 1;       fi;       echo "deps attempt $attempt failed, retrying in 10s...";       sleep 10;     done:
+0.222 ===== deps build attempt 1/3 =====
+0.227 CANNOT LINK EXECUTABLE "cut": library "libiconv.so" not found
+0.227 linker: CANNOT LINK EXECUTABLE "cut": library "libiconv.so" not found
+0.228 mkdir -p ".deps"
+0.230 CANNOT LINK EXECUTABLE "mkdir": library "libiconv.so" not found
+0.230 linker: CANNOT LINK EXECUTABLE "mkdir": library "libiconv.so" not found
+0.230 make: *** [Makefile:122: ".deps"] Error 1
+0.231 deps attempt 1 failed, retrying in 10s...
+0.231 CANNOT LINK EXECUTABLE "sleep": library "libiconv.so" not found
+0.231 linker: CANNOT LINK EXECUTABLE "sleep": library "libiconv.so" not found
+------
+Dockerfile:36
+--------------------
+  35 |     # Stage 1: deps
+  36 | >>> RUN set -e; \
+  37 | >>>     for attempt in 1 2 3; do \
+  38 | >>>       echo "===== deps build attempt $attempt/3 ====="; \
+  39 | >>>       if make CMAKE_BUILD_TYPE=Release \
+  40 | >>>               CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON" \
+  41 | >>>               deps; then \
+  42 | >>>         echo "===== deps OK on attempt $attempt ====="; \
+  43 | >>>         break; \
+  44 | >>>       fi; \
+  45 | >>>       if [ "$$attempt" = "3" ]; then \
+  46 | >>>         echo "::error::deps build failed after 3 attempts"; \
+  47 | >>>         exit 1; \
+  48 | >>>       fi; \
+  49 | >>>       echo "deps attempt $attempt failed, retrying in 10s..."; \
+  50 | >>>       sleep 10; \
+  51 | >>>     done
+  52 |     
+--------------------
+ERROR: failed to build: failed to solve: process "sh -c set -e;     for attempt in 1 2 3; do       echo \"===== deps build attempt $attempt/3 =====\";       if make CMAKE_BUILD_TYPE=Release               CMAKE_EXTRA_FLAGS=\"-DCMAKE_VERBOSE_MAKEFILE=ON\"               deps; then         echo \"===== deps OK on attempt $attempt =====\";         break;       fi;       if [ \"$$attempt\" = \"3\" ]; then         echo \"::error::deps build failed after 3 attempts\";         exit 1;       fi;       echo \"deps attempt $attempt failed, retrying in 10s...\";       sleep 10;     done" did not complete successfully: exit code: 1
