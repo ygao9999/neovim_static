@@ -26,7 +26,8 @@ RUN apk add --no-cache \
     autoconf \
     automake \
     libtool \
-    coreutils
+    coreutils \
+    linux-headers
 
 # --- Group 2: main-repo dev+static pairs ------------------------------------
 RUN apk add --no-cache \
