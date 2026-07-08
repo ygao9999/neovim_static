@@ -2,7 +2,7 @@ FROM termux/termux-docker:latest AS builder
 
 USER 1000:1000
 
-# 安装构建依赖（系统提供动态 iconv 供 git 等使用）
+# 安装依赖（包括 libiconv-static）
 RUN pkg update && pkg install -y \
     bash \
     cmake \
@@ -19,42 +19,30 @@ RUN pkg update && pkg install -y \
     libtool \
     coreutils \
     gettext \
-    file 
-    # 注意：我们不安装 libiconv-static，因为我们要自己编译
-
-
-# 自己编译一份纯静态 libiconv（安装到 ~/local）
-RUN mkdir -p /data/data/com.termux/files/home/tmp/iconv-build && cd /data/data/com.termux/files/home/tmp/iconv-build && \
-    curl -L https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz -o libiconv.tar.gz && \
-    tar xzf libiconv.tar.gz --strip-components=1 && \
-    ./configure --prefix=/data/data/com.termux/files/home/local \
-                --enable-static \
-                --disable-shared \
-                --disable-nls \
-                --disable-rpath && \
-    make -j"$(nproc)" && make install
+    file \
+    libiconv-static
 
 ARG NVIM_REF=stable
 RUN git clone --depth 1 --branch "${NVIM_REF}" https://github.com/neovim/neovim.git /data/data/com.termux/files/home/neovim
 
 WORKDIR /data/data/com.termux/files/home/neovim
 
+# ========== 关键补丁：强制使用静态 libiconv ==========
+# 将 Neovim 的 CMakeLists.txt 中对 iconv 的查找和链接替换为静态库路径
+RUN sed -i 's/find_package(Iconv REQUIRED)/# find_package(Iconv REQUIRED)/' CMakeLists.txt && \
+    sed -i 's/target_link_libraries(nvim PRIVATE $<BUILD_INTERFACE:Iconv::Iconv>)/target_link_libraries(nvim PRIVATE \/data\/data\/com.termux\/files\/usr\/lib\/libiconv.a)/' src/nvim/CMakeLists.txt
+
+# =========================================================
+
 ENV CMAKE_BUILD_PARALLEL_LEVEL=2
 ENV VERBOSE=1
 
-# 设置环境变量，引导 CMake 找到我们自己的静态 iconv
-
-ENV Iconv_LIBRARY=/data/data/com.termux/files/home/local/lib/libiconv.a
-ENV Iconv_INCLUDE_DIR=/data/data/com.termux/files/home/local/include
-
-# deps 构建（不需要 iconv，但设置了变量也没关系）
+# Stage 1: deps
 RUN set -e; \
     for attempt in 1 2 3; do \
       echo "===== deps build attempt $attempt/3 ====="; \
       if make CMAKE_BUILD_TYPE=Release \
-              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON \
-                -DIconv_LIBRARY=${Iconv_LIBRARY} \
-                -DIconv_INCLUDE_DIR=${Iconv_INCLUDE_DIR}" \
+              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON" \
               deps; then \
         echo "===== deps OK on attempt $attempt ====="; \
         break; \
@@ -67,14 +55,12 @@ RUN set -e; \
       sleep 10; \
     done
 
-# nvim 构建（强制链接我们自己的静态 iconv）
+# Stage 2: nvim
 RUN set -e; \
     for attempt in 1 2 3; do \
       echo "===== nvim build attempt $attempt/3 ====="; \
       if make CMAKE_BUILD_TYPE=Release \
-              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON \
-                -DIconv_LIBRARY=${Iconv_LIBRARY} \
-                -DIconv_INCLUDE_DIR=${Iconv_INCLUDE_DIR}" \
+              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON" \
               -j"$(nproc)"; then \
         echo "===== nvim OK on attempt $attempt ====="; \
         break; \
@@ -87,7 +73,7 @@ RUN set -e; \
       sleep 10; \
     done
 
-# ---- 运行时打包阶段 -------------------------------------------------
+# ---- runtime ----
 FROM termux/termux-docker:latest AS runtime
 USER 1000:1000
 RUN termux-change-repo || true
@@ -98,7 +84,7 @@ COPY --from=builder /data/data/com.termux/files/home/neovim/runtime /data/data/c
 RUN file /data/data/com.termux/files/home/out/nvim > /data/data/com.termux/files/home/out/file-info.txt && \
     { ldd /data/data/com.termux/files/home/out/nvim 2>&1 || true; } > /data/data/com.termux/files/home/out/ldd.txt
 
-# ---- 最终导出 -------------------------------------------------
+# ---- export ----
 FROM scratch
 COPY --from=runtime /data/data/com.termux/files/home/out /out
 CMD ["/out/nvim"]
