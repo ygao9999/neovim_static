@@ -1,9 +1,7 @@
 FROM termux/termux-docker:latest AS builder
 
-# termux-docker runs as root by default in some tags, but pkg requires the termux user
-USER 1000:1000
-
-# Update and install native Termux build tools + static libiconv
+# Temporarily use root to install packages and remove the shared libiconv
+USER root
 RUN pkg update && pkg install -y \
     bash \
     cmake \
@@ -21,11 +19,14 @@ RUN pkg update && pkg install -y \
     coreutils \
     gettext \
     file \
-    libiconv-static
+    libiconv-static \
+    && rm -f /data/data/com.termux/files/usr/lib/libiconv.so*
+
+# Switch back to the termux user
+USER 1000:1000
 
 # Allow overriding the Neovim ref (tag / branch / commit) at build time.
 ARG NVIM_REF=stable
-# termux-docker defaults to user '1000' in /data/data/com.termux/files/home
 RUN git clone --depth 1 --branch "${NVIM_REF}" https://github.com/neovim/neovim.git /data/data/com.termux/files/home/neovim
 
 WORKDIR /data/data/com.termux/files/home/neovim
@@ -40,8 +41,7 @@ RUN set -e; \
     for attempt in 1 2 3; do \
       echo "===== deps build attempt $attempt/3 ====="; \
       if make CMAKE_BUILD_TYPE=Release \
-              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON \
-                -DIconv_LIBRARY=/data/data/com.termux/files/usr/lib/libiconv.a" \
+              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON" \
               deps; then \
         echo "===== deps OK on attempt $attempt ====="; \
         break; \
@@ -59,8 +59,7 @@ RUN set -e; \
     for attempt in 1 2 3; do \
       echo "===== nvim build attempt $attempt/3 ====="; \
       if make CMAKE_BUILD_TYPE=Release \
-              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON \
-                -DIconv_LIBRARY=/data/data/com.termux/files/usr/lib/libiconv.a" \
+              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON" \
               -j"$(nproc)"; then \
         echo "===== nvim OK on attempt $attempt ====="; \
         break; \
@@ -80,13 +79,10 @@ RUN pkg update && pkg install -y tar file
 RUN mkdir -p /data/data/com.termux/files/home/out
 COPY --from=builder /data/data/com.termux/files/home/neovim/build/bin/nvim /data/data/com.termux/files/home/out/nvim
 COPY --from=builder /data/data/com.termux/files/home/neovim/runtime /data/data/com.termux/files/home/out/runtime
-# Capture dynamic-link info as a file we can read out later.
 RUN file /data/data/com.termux/files/home/out/nvim > /data/data/com.termux/files/home/out/file-info.txt && \
     { ldd /data/data/com.termux/files/home/out/nvim 2>&1 || true; } > /data/data/com.termux/files/home/out/ldd.txt
 
 # ---- minimal export stage ----------------------------------------------------
-# Final image is 'scratch' so `docker create` + `docker cp` gives us only the
-# artifacts we want, with no extra distro files.
 FROM scratch
 COPY --from=runtime /data/data/com.termux/files/home/out /out
 CMD ["/out/nvim"]
