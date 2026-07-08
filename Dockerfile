@@ -29,14 +29,9 @@ RUN apk add --no-cache \
     coreutils \
     linux-headers
 
-# --- Group 2: main-repo dev+static pairs ------------------------------------
+# --- Group 2: remaining system dependencies ---------------------------------
 RUN apk add --no-cache \
-    gettext-dev \
-    gettext-static \
-    libuv-dev \
-    libuv-static \
-    ncurses-dev \
-    ncurses-static
+    gettext-tiny-dev
 
 
 
