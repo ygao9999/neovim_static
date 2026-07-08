@@ -3,7 +3,7 @@ FROM termux/termux-docker:latest AS builder
 # termux-docker runs as root by default in some tags, but pkg requires the termux user
 USER 1000:1000
 
-# Update and install native Termux build tools
+# Update and install native Termux build tools + static libiconv
 RUN pkg update && pkg install -y \
     bash \
     cmake \
@@ -20,7 +20,8 @@ RUN pkg update && pkg install -y \
     libtool \
     coreutils \
     gettext \
-    file
+    file \
+    libiconv-static
 
 # Allow overriding the Neovim ref (tag / branch / commit) at build time.
 ARG NVIM_REF=stable
@@ -39,7 +40,8 @@ RUN set -e; \
     for attempt in 1 2 3; do \
       echo "===== deps build attempt $attempt/3 ====="; \
       if make CMAKE_BUILD_TYPE=Release \
-              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON" \
+              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON \
+                -DIconv_LIBRARY=/data/data/com.termux/files/usr/lib/libiconv.a" \
               deps; then \
         echo "===== deps OK on attempt $attempt ====="; \
         break; \
@@ -57,7 +59,8 @@ RUN set -e; \
     for attempt in 1 2 3; do \
       echo "===== nvim build attempt $attempt/3 ====="; \
       if make CMAKE_BUILD_TYPE=Release \
-              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON" \
+              CMAKE_EXTRA_FLAGS="-DCMAKE_VERBOSE_MAKEFILE=ON \
+                -DIconv_LIBRARY=/data/data/com.termux/files/usr/lib/libiconv.a" \
               -j"$(nproc)"; then \
         echo "===== nvim OK on attempt $attempt ====="; \
         break; \
