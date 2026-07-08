@@ -1,38 +1,54 @@
-FROM alpine:latest AS builder
+# Pin Alpine to a specific version for reproducibility.
+# `alpine:latest` can roll forward and break builds when packages get renamed
+# (e.g. some `-static` subpackages were moved between 3.20 and 3.21).
+# Bump deliberately when you've tested a newer version works.
+FROM alpine:3.20 AS builder
 
-# Install core build tools and static variants of required libraries.
-# pin versions are intentionally not used so we always pick up the latest
-# stable Alpine packages; bump Alpine tag (e.g. alpine:3.20) if you need
-# reproducibility.
+# Refresh the package index. The base image's index can be stale by the time
+# CI runs, which causes spurious "package not found" errors.
+RUN apk update
+
+# --- Group 1: core build tools (always present in main) ---------------------
 RUN apk add --no-cache \
     bash \
     cmake \
     curl \
     g++ \
     gcc \
-    gettext-dev \
-    gettext-static \
     git \
     gperf \
-    libtermkey-dev \
-    libtermkey-static \
+    make \
+    samurai \
+    musl-dev
+
+# --- Group 2: main-repo dev+static pairs ------------------------------------
+RUN apk add --no-cache \
+    gettext-dev \
+    gettext-static \
     libuv-dev \
     libuv-static \
+    ncurses-dev \
+    ncurses-static
+
+# --- Group 3: community-repo dev+static pairs -------------------------------
+# NOTE: libtermkey and unibilium do NOT ship separate -static subpackages in
+# Alpine — the .a files are bundled inside the -dev package. Listing a
+# `libtermkey-static` or `unibilium-static` here makes apk fail with
+# "unable to select packages" (exit code 2). Do not add them.
+RUN apk add --no-cache \
+    libtermkey-dev \
     libvterm-dev \
     libvterm-static \
-    lua5.1-bitop \
-    lua5.1-lpeg \
-    luajit-dev \
-    make \
-    msgpack-c-dev \
-    musl-dev \
-    ncurses-dev \
-    ncurses-static \
-    samurai \
     tree-sitter-dev \
     tree-sitter-static \
     unibilium-dev \
-    unibilium-static
+    msgpack-c-dev
+
+# --- Group 4: Lua runtime + dev ---------------------------------------------
+RUN apk add --no-cache \
+    luajit-dev \
+    lua5.1-bitop \
+    lua5.1-lpeg
 
 # Allow overriding the Neovim ref (tag / branch / commit) at build time.
 # Defaults to 'stable'. Example: docker build --build-arg NVIM_REF=v0.10.4 .
@@ -50,12 +66,13 @@ RUN make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DSTATIC_BUILD=1" -j"$(npro
 # We need the runtime/ directory (syntax files, lua stdlib, autoload scripts)
 # so the static binary is usable on a host that has no Neovim installed.
 # Use a small alpine image to copy runtime + binary into a tarball-friendly fs.
-FROM alpine:latest AS runtime
-RUN apk add --no-cache tar
+FROM alpine:3.20 AS runtime
+RUN apk add --no-cache tar file
 COPY --from=builder /neovim/build/bin/nvim /out/nvim
 COPY --from=builder /neovim/runtime /out/runtime
-# Print ldd result into a file so the workflow can show it.
-RUN ldd /out/nvim || true
+# Capture static-link info as a file we can read out later.
+RUN file /out/nvim > /out/file-info.txt && \
+    { ldd /out/nvim 2>&1 || true; } > /out/ldd.txt
 
 # ---- minimal export stage ----------------------------------------------------
 # Final image is 'scratch' so `docker create` + `docker cp` gives us only the
