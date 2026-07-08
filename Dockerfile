@@ -74,15 +74,16 @@ RUN set -e; \
 FROM termux/termux-docker:latest AS runtime
 USER 1000:1000
 RUN pkg update && pkg install -y tar file
-COPY --from=builder /data/data/com.termux/files/home/neovim/build/bin/nvim /out/nvim
-COPY --from=builder /data/data/com.termux/files/home/neovim/runtime /out/runtime
+RUN mkdir -p /data/data/com.termux/files/home/out
+COPY --from=builder /data/data/com.termux/files/home/neovim/build/bin/nvim /data/data/com.termux/files/home/out/nvim
+COPY --from=builder /data/data/com.termux/files/home/neovim/runtime /data/data/com.termux/files/home/out/runtime
 # Capture dynamic-link info as a file we can read out later.
-RUN file /out/nvim > /out/file-info.txt && \
-    { ldd /out/nvim 2>&1 || true; } > /out/ldd.txt
+RUN file /data/data/com.termux/files/home/out/nvim > /data/data/com.termux/files/home/out/file-info.txt && \
+    { ldd /data/data/com.termux/files/home/out/nvim 2>&1 || true; } > /data/data/com.termux/files/home/out/ldd.txt
 
 # ---- minimal export stage ----------------------------------------------------
 # Final image is 'scratch' so `docker create` + `docker cp` gives us only the
 # artifacts we want, with no extra distro files.
 FROM scratch
-COPY --from=runtime /out /out
+COPY --from=runtime /data/data/com.termux/files/home/out /out
 CMD ["/out/nvim"]
