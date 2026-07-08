@@ -1,7 +1,7 @@
-# Build Neovim natively for Termux using the official termux-docker multi-arch image.
-# This produces a binary dynamically linked to Android's Bionic libc, which perfectly
-# supports dlopen (for plugins like tree-sitter) and avoids seccomp SIGSYS crashes.
 FROM termux/termux-docker:latest AS builder
+
+# termux-docker runs as root by default in some tags, but pkg requires the builder user
+USER builder
 
 # Update and install native Termux build tools
 RUN pkg update && pkg install -y \
@@ -72,6 +72,7 @@ RUN set -e; \
 
 # ---- runtime packaging stage -------------------------------------------------
 FROM termux/termux-docker:latest AS runtime
+USER builder
 RUN pkg update && pkg install -y tar file
 COPY --from=builder /home/builder/neovim/build/bin/nvim /out/nvim
 COPY --from=builder /home/builder/neovim/runtime /out/runtime
