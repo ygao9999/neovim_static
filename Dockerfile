@@ -1,7 +1,7 @@
 FROM termux/termux-docker:latest AS builder
 
-# termux-docker runs as root by default in some tags, but pkg requires the builder user
-USER builder
+# termux-docker runs as root by default in some tags, but pkg requires the termux user
+USER 1000:1000
 
 # Update and install native Termux build tools
 RUN pkg update && pkg install -y \
@@ -24,10 +24,10 @@ RUN pkg update && pkg install -y \
 
 # Allow overriding the Neovim ref (tag / branch / commit) at build time.
 ARG NVIM_REF=stable
-# termux-docker defaults to user 'builder' in /home/builder
-RUN git clone --depth 1 --branch "${NVIM_REF}" https://github.com/neovim/neovim.git /home/builder/neovim
+# termux-docker defaults to user '1000' in /data/data/com.termux/files/home
+RUN git clone --depth 1 --branch "${NVIM_REF}" https://github.com/neovim/neovim.git /data/data/com.termux/files/home/neovim
 
-WORKDIR /home/builder/neovim
+WORKDIR /data/data/com.termux/files/home/neovim
 
 ENV CMAKE_BUILD_PARALLEL_LEVEL=2
 ENV VERBOSE=1
@@ -72,10 +72,10 @@ RUN set -e; \
 
 # ---- runtime packaging stage -------------------------------------------------
 FROM termux/termux-docker:latest AS runtime
-USER builder
+USER 1000:1000
 RUN pkg update && pkg install -y tar file
-COPY --from=builder /home/builder/neovim/build/bin/nvim /out/nvim
-COPY --from=builder /home/builder/neovim/runtime /out/runtime
+COPY --from=builder /data/data/com.termux/files/home/neovim/build/bin/nvim /out/nvim
+COPY --from=builder /data/data/com.termux/files/home/neovim/runtime /out/runtime
 # Capture dynamic-link info as a file we can read out later.
 RUN file /out/nvim > /out/file-info.txt && \
     { ldd /out/nvim 2>&1 || true; } > /out/ldd.txt
