@@ -2,7 +2,6 @@ FROM termux/termux-docker:latest AS builder
 
 USER 1000:1000
 
-# 安装依赖（包括 libiconv-static）
 RUN pkg update && pkg install -y \
     bash \
     cmake \
@@ -25,14 +24,10 @@ RUN pkg update && pkg install -y \
 ARG NVIM_REF=stable
 RUN git clone --depth 1 --branch "${NVIM_REF}" https://github.com/neovim/neovim.git /data/data/com.termux/files/home/neovim
 
+# ✅ 关键：git 已执行完毕，此时删除动态库不会影响后续编译
+RUN rm -f /data/data/com.termux/files/usr/lib/libiconv.so*
+
 WORKDIR /data/data/com.termux/files/home/neovim
-
-# ========== 关键补丁：强制使用静态 libiconv ==========
-# 将 Neovim 的 CMakeLists.txt 中对 iconv 的查找和链接替换为静态库路径
-RUN sed -i 's/find_package(Iconv REQUIRED)/# find_package(Iconv REQUIRED)/' CMakeLists.txt && \
-    sed -i 's/target_link_libraries(nvim PRIVATE $<BUILD_INTERFACE:Iconv::Iconv>)/target_link_libraries(nvim PRIVATE \/data\/data\/com.termux\/files\/usr\/lib\/libiconv.a)/' src/nvim/CMakeLists.txt
-
-# =========================================================
 
 ENV CMAKE_BUILD_PARALLEL_LEVEL=2
 ENV VERBOSE=1
