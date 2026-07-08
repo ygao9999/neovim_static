@@ -44,10 +44,10 @@ jobs:
   build:
     name: Build (${{ matrix.arch }})
     runs-on: ${{ matrix.runner }}
-    # Was 90; bumped to 120 because the Dockerfile now builds deps and nvim
-    # in separate layers (no shared -j). Wall-clock penalty is small but the
-    # ARM64/QEMU path can be slow on first build before cache warms up.
-    timeout-minutes: 120
+    # Was 120; bumped to 180 because the Dockerfile now retries both deps and
+    # nvim builds up to 3 times each (with 10s backoff) and uses -j2 for deps.
+    # First build with cold cache on ARM64/QEMU can approach this.
+    timeout-minutes: 180
     permissions:
       contents: write   # needed for the optional Release upload step
     strategy:

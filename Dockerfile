@@ -64,20 +64,64 @@ WORKDIR /neovim
 # (luajit, libuv, libvterm, libtermkey, unibilium, tree-sitter, msgpack, ...).
 # Splitting forces the deps phase to run alone, so the real error is visible.
 #
-# Why -j2 for ninja: GitHub runners have ~7 GB RAM. Ninja defaults to one job
-# per core (4 on ubuntu-latest). tree-sitter + libvterm + luajit compiling
-# simultaneously can OOM-kill a worker, and the kill message gets eaten by
-# interleaved output → you only see "ninja: subcommand failed" with no cause.
-ENV NINJA_FLAGS="-j2"
+# Why CMAKE_BUILD_PARALLEL_LEVEL (not NINJA_FLAGS): Neovim's Makefile drives
+# deps via `cmake --build .deps/build`, and cmake 3.12+ reads the
+# CMAKE_BUILD_PARALLEL_LEVEL env var to decide how many jobs to run. Setting
+# NINJA_FLAGS has NO effect here — that was my previous mistake, which is why
+# deps were still running at full parallel and the real error stayed buried.
+ENV CMAKE_BUILD_PARALLEL_LEVEL=2
+# Verbose build so we can see the exact compile/link command that fails.
+ENV VERBOSE=1
 
 # Stage 1: third-party deps. This is the slow, failure-prone part.
-# Don't pass -j to make here — make's -j controls recipe parallelism, but
-# deps is a single recipe that spawns one ninja invocation. ninja's own
-# parallelism is what matters, and we set that via NINJA_FLAGS above.
-RUN make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DSTATIC_BUILD=1" deps
+#
+# Retry up to 3 times. The most common transient failure is a git clone or
+# tarball download hitting GitHub's rate limit, which a single retry usually
+# fixes. On final failure, dump the build logs so the GHA log shows exactly
+# which dep failed.
+RUN set -e; \
+    for attempt in 1 2 3; do \
+      echo "===== deps build attempt $attempt/3 ====="; \
+      if make CMAKE_BUILD_TYPE=Release \
+              CMAKE_EXTRA_FLAGS="-DSTATIC_BUILD=1 -DCMAKE_VERBOSE_MAKEFILE=ON" \
+              deps; then \
+        echo "===== deps OK on attempt $attempt ====="; \
+        break; \
+      fi; \
+      if [ "$$attempt" = "3" ]; then \
+        echo "::error::deps build failed after 3 attempts. Dumping build logs:"; \
+        echo "----- .deps/build/CMakeFiles/CMakeError.log -----"; \
+        tail -n 200 /neovim/.deps/build/CMakeFiles/CMakeError.log 2>/dev/null || true; \
+        echo "----- .deps/build/CMakeFiles/CMakeOutput.log -----"; \
+        tail -n 100 /neovim/.deps/build/CMakeFiles/CMakeOutput.log 2>/dev/null || true; \
+        echo "----- last 300 lines of .deps/build build output -----"; \
+        find /neovim/.deps/build -name 'build.log' -o -name '*.log' 2>/dev/null | head -n 5; \
+        echo "----- per-dep build directories -----"; \
+        ls -la /neovim/.deps/build/src/ 2>/dev/null || true; \
+        exit 1; \
+      fi; \
+      echo "deps attempt $attempt failed, retrying in 10s..."; \
+      sleep 10; \
+    done
 
 # Stage 2: nvim itself. Small .c files, safe to parallelize aggressively.
-RUN make CMAKE_BUILD_TYPE=Release CMAKE_EXTRA_FLAGS="-DSTATIC_BUILD=1" -j"$(nproc)"
+# Still retry once — rarely a transient gcc OOM on small runners.
+RUN set -e; \
+    for attempt in 1 2 3; do \
+      echo "===== nvim build attempt $attempt/3 ====="; \
+      if make CMAKE_BUILD_TYPE=Release \
+              CMAKE_EXTRA_FLAGS="-DSTATIC_BUILD=1 -DCMAKE_VERBOSE_MAKEFILE=ON" \
+              -j"$(nproc)"; then \
+        echo "===== nvim OK on attempt $attempt ====="; \
+        break; \
+      fi; \
+      if [ "$$attempt" = "3" ]; then \
+        echo "::error::nvim build failed after 3 attempts"; \
+        exit 1; \
+      fi; \
+      echo "nvim attempt $attempt failed, retrying in 10s..."; \
+      sleep 10; \
+    done
 
 # ---- runtime packaging stage -------------------------------------------------
 # We need the runtime/ directory (syntax files, lua stdlib, autoload scripts)
