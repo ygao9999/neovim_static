@@ -1,0 +1,321 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.99kB 0.0s done
+#1 DONE 0.1s
+
+#2 [auth] termux/termux-docker:pull token for registry-1.docker.io
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/termux/termux-docker:latest
+#3 DONE 0.6s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [builder 1/7] FROM docker.io/termux/termux-docker:latest@sha256:d3bcd378044e81967b0fd983e1e2e16d5ea29073c0bd5aac5dd77324261d4fd5
+#5 resolve docker.io/termux/termux-docker:latest@sha256:d3bcd378044e81967b0fd983e1e2e16d5ea29073c0bd5aac5dd77324261d4fd5 done
+#5 sha256:38f23c64fe47e0d0d3190f93ac4026d911237f0a6fe5f5dc90f0eb7878a9e361 1.05MB / 49.43MB 0.1s
+#5 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 0B / 32B 0.1s
+#5 sha256:d3bcd378044e81967b0fd983e1e2e16d5ea29073c0bd5aac5dd77324261d4fd5 1.38kB / 1.38kB done
+#5 sha256:278854e692aaf91110e14d45244a8c03e1a0c3d754b1125283d7689a2a11defd 735B / 735B done
+#5 sha256:87b0eba611fccd70e31d16018853116310905dd59316b79911e8ff393cf6395e 2.97kB / 2.97kB done
+#5 sha256:38f23c64fe47e0d0d3190f93ac4026d911237f0a6fe5f5dc90f0eb7878a9e361 49.43MB / 49.43MB 0.3s
+#5 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 32B / 32B 0.1s done
+#5 sha256:38f23c64fe47e0d0d3190f93ac4026d911237f0a6fe5f5dc90f0eb7878a9e361 49.43MB / 49.43MB 0.3s done
+#5 extracting sha256:38f23c64fe47e0d0d3190f93ac4026d911237f0a6fe5f5dc90f0eb7878a9e361 0.1s
+#5 extracting sha256:38f23c64fe47e0d0d3190f93ac4026d911237f0a6fe5f5dc90f0eb7878a9e361 1.4s done
+#5 extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 done
+#5 DONE 1.9s
+
+#6 [runtime 2/7] RUN termux-change-repo || true
+#6 0.168 [?1049h[22;0;0t[1;24r(B[m[4l[?7h[?1h=[?1006;1000h[39;49m[?1h=[?1h=[39;49m(B[m[H[2J[18d(B[0;1m[36m[44m[J[H[K[2d[K[3d[K[4d[K[5d[K[6d[K[7d   (0[0;1m[37m[47mlqqqqqqqqqqqqqqqqqqqqqqqq(B[0;1m[34m[47mtermux-change-repo(0[0;1m[37m[47mqqqqqqqqqqqqqqqqqqqqqqqqqqq(0[0m[30m[47mk(B[0;1m[36m[44m[K[8d   (0[0;1m[37m[47mx(B[0m[30m[47m Do you want to choose a mirror group or a single mirror? Select     (0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[9d   (0[0;1m[37m[47mx(B[0m[30m[47m with space.[57X[74G(0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[10d   (0[0;1m[37m[47mx(B[0m[30m[47m (0[0m[30m[47mlqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq(0[0;1m[37m[47mk(B[0m[30m[47m (0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[11d   (0[0;1m[37m[47mx(B[0m[30m[47m (0[0m[30m[47mx(B[0m[30m[47m (B[0;1m[37m[44m(*)(B[0m[30m[47m (B[0;1m[31m[44mM[33m[44mirror group(B[0m[30m[47m   (B[0;1m[37m[44mRotate between several mirrors (recommended)(B[0m[30m[47m (0[0;1m[37m[47mx(B[0m[30m[47m (0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[12d   (0[0;1m[37m[47mx(B[0m[30m[47m (0[0m[30m[47mm(0[0;1m[37m[47mqqqqq(B[0;1m[32m[47m↓(+)(0[0;1m[37m[47mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq(B[0;1m[34m[47m50%(0[0;1m[37m[47mqqqqqj(B[0m[30m[47m (0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[13d   (0[0;1m[37m[47mx(B[0m[30m[47m[69X[74G(0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[14d   (0[0;1m[37m[47mtqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq(0[0m[30m[47mu(B[0;1m[30m[40m  [36m[44m[K[15d   (0[0;1m[37m[47mx(B[0m[30m[47m[69X[74G(0[0m[30m[47mx(B[0;1m[30m[40m  [36m[44m[K[16d   (0[0;1m[37m[47mm(0[0m[30m[47mqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqj(B[0;1m[30m[40m  [36m[44m[K[17;5H[1K [30m[40m[71X[77G[36m[44m[K[12;67H[39;49m(B[m[15;26H(B[0;1m[37m[44m<[33m[44m  OK  [37m[44m>[15;45H(B[0m[30m[47m<(B[0;1m[30m[47mCancel(B[0m[30m[47m>[15;29H[39;49m(B[m[7d(B[0;1m[36m[44m[J[24;80H[39;49m(B[m[?1006;1000l[24;1H[?1049l[23;0;0t[?1l>[H[2J[3J
+#6 DONE 0.2s
+
+#7 [builder 2/7] RUN pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static     patchelf     binutils
+#7 0.170 No mirror or mirror group selected. You might want to select one by running 'termux-change-repo'
+#7 0.187 Testing the available mirrors:
+#7 5.226 [*] (10) https://packages-cf.termux.dev/apt/termux-main: ok
+#7 5.226 [*] (1) https://mirrors.saswata.cc/termux/termux-main: bad
+#7 5.226 [*] (1) https://mirror.nevacloud.com/applications/termux/termux-main: ok
+#7 5.226 [*] (1) https://mirrors.krnk.org/apt/termux/termux-main: ok
+#7 5.227 [*] (1) https://mirrors.cbrx.io/apt/termux/termux-main: ok
+#7 5.227 [*] (1) https://mirror.textcord.xyz/termux/termux-main: ok
+#7 5.227 [*] (1) https://mirrors.in.sahilister.net/termux/termux-main/: ok
+#7 5.227 [*] (1) https://mirror.albony.in/termux/termux-main: ok
+#7 5.227 [*] (1) https://tmx.xvx.my.id/apt/termux-main: ok
+#7 5.227 [*] (1) https://mirror.jeonnam.school/termux/termux-main: ok
+#7 ...
+
+#8 [runtime 3/7] RUN pkg update && pkg install -y tar file
+#8 0.202 No mirror or mirror group selected. You might want to select one by running 'termux-change-repo'
+#8 0.216 Testing the available mirrors:
+#8 5.246 [*] (10) https://packages-cf.termux.dev/apt/termux-main: ok
+#8 5.246 [*] (1) https://mirrors.saswata.cc/termux/termux-main: bad
+#8 5.246 [*] (1) https://mirror.nevacloud.com/applications/termux/termux-main: ok
+#8 5.246 [*] (1) https://mirrors.krnk.org/apt/termux/termux-main: ok
+#8 5.246 [*] (1) https://mirrors.cbrx.io/apt/termux/termux-main: ok
+#8 5.246 [*] (1) https://mirror.textcord.xyz/termux/termux-main: ok
+#8 5.246 [*] (1) https://mirrors.in.sahilister.net/termux/termux-main/: ok
+#8 5.246 [*] (1) https://mirror.albony.in/termux/termux-main: ok
+#8 5.246 [*] (1) https://tmx.xvx.my.id/apt/termux-main: ok
+#8 5.246 [*] (1) https://mirror.jeonnam.school/termux/termux-main: ok
+#8 7.768 [*] (1) https://mirror.freedif.org/termux/termux-main: ok
+#8 7.768 [*] (1) https://mirror.meowsmp.net/termux/termux-main: bad
+#8 7.768 [*] (1) https://mirror.twds.com.tw/termux/termux-main: ok
+#8 7.768 [*] (1) https://mirrors.nguyenhoang.cloud/termux/termux-main: ok
+#8 7.768 [*] (1) https://termux.niranjan.co/termux-main: ok
+#8 7.768 [*] (1) https://mirror.bardia.tech/termux/termux-main: bad
+#8 7.768 [*] (1) https://mirrors.ravidwivedi.in/termux/termux-main: ok
+#8 7.768 [*] (1) https://linux.domainesia.com/applications/termux/termux-main: ok
+#8 7.768 [*] (1) https://mirror.rinarin.dev/termux/termux-main: ok
+#8 7.768 [*] (1) https://mirrors.zju.edu.cn/termux/apt/termux-main: ok
+#8 ...
+
+#7 [builder 2/7] RUN pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static     patchelf     binutils
+#7 9.649 [*] (1) https://mirror.freedif.org/termux/termux-main: ok
+#7 9.649 [*] (1) https://mirror.meowsmp.net/termux/termux-main: bad
+#7 9.649 [*] (1) https://mirror.twds.com.tw/termux/termux-main: ok
+#7 9.649 [*] (1) https://mirrors.nguyenhoang.cloud/termux/termux-main: ok
+#7 9.649 [*] (1) https://termux.niranjan.co/termux-main: ok
+#7 9.649 [*] (1) https://mirror.bardia.tech/termux/termux-main: bad
+#7 9.649 [*] (1) https://mirrors.ravidwivedi.in/termux/termux-main: ok
+#7 9.649 [*] (1) https://linux.domainesia.com/applications/termux/termux-main: ok
+#7 9.649 [*] (1) https://mirror.rinarin.dev/termux/termux-main: ok
+#7 9.650 [*] (1) https://mirrors.zju.edu.cn/termux/apt/termux-main: ok
+#7 12.88 [*] (1) https://mirrors.hust.edu.cn/termux/apt/termux-main: ok
+#7 12.88 [*] (1) https://mirrors.pku.edu.cn/termux/termux-main/: ok
+#7 12.88 [*] (1) https://mirrors.aliyun.com/termux/termux-main: ok
+#7 12.88 [*] (1) https://mirror.iscas.ac.cn/termux/apt/termux-main: ok
+#7 12.88 [*] (1) https://mirrors.cernet.edu.cn/termux/apt/termux-main: ok
+#7 12.88 [*] (1) https://mirrors.bfsu.edu.cn/termux/apt/termux-main: ok
+#7 12.88 [*] (1) https://mirrors.nju.edu.cn/termux/apt/termux-main: ok
+#7 12.88 [*] (1) https://mirrors.sdu.edu.cn/termux/termux-main: ok
+#7 12.88 [*] (1) https://mirror.nyist.edu.cn/termux/apt/termux-main: ok
+#7 12.88 [*] (1) https://mirrors.sustech.edu.cn/termux/apt/termux-main: ok
+#7 15.56 [*] (1) https://mirrors.tuna.tsinghua.edu.cn/termux/apt/termux-main: ok
+#7 15.56 [*] (1) https://mirrors.sau.edu.cn/termux/apt/termux-main: ok
+#7 15.56 [*] (1) https://mirror.sjtu.edu.cn/termux/termux-main/: ok
+#7 15.56 [*] (1) https://mirrors.cqupt.edu.cn/termux/termux-main: ok
+#7 15.56 [*] (1) https://mirrors.ustc.edu.cn/termux/termux-main: ok
+#7 15.56 [*] (1) https://mirror.leitecastro.com/termux/termux-main: ok
+#7 15.56 [*] (1) https://mirrors.medzik.dev/termux/termux-main: bad
+#7 15.56 [*] (1) https://ftp.fau.de/termux/termux-main: ok
+#7 15.56 [*] (1) https://mirror.mwt.me/termux/main: ok
+#7 15.56 [*] (1) https://termux.3san.dev/termux/termux-main: ok
+#7 17.09 [*] (1) https://is.mirror.flokinet.net/termux/termux-main: ok
+#7 17.09 [*] (1) https://termux.librehat.com/apt/termux-main: ok
+#7 17.09 [*] (1) https://ftp.agdsn.de/termux/termux-main: ok
+#7 17.09 [*] (1) https://nl.mirror.flokinet.net/termux/termux-main: ok
+#7 17.09 [*] (1) https://mirror.polido.pt/termux/termux-main: bad
+#7 17.09 [*] (1) https://mirror.sunred.org/termux/termux-main: ok
+#7 17.09 [*] (1) https://mirror.autkin.net/termux/termux-main: ok
+#7 17.09 [*] (1) https://mirror.bouwhuis.network/termux/termux-main: ok
+#7 17.09 [*] (1) https://mirrors.cfe.re/termux/termux-main: bad
+#7 17.09 [*] (1) https://mirrors.de.sahilister.net/termux/termux-main: ok
+#7 ...
+
+#8 [runtime 3/7] RUN pkg update && pkg install -y tar file
+#8 10.43 [*] (1) https://mirrors.hust.edu.cn/termux/apt/termux-main: ok
+#8 10.43 [*] (1) https://mirrors.pku.edu.cn/termux/termux-main/: ok
+#8 10.43 [*] (1) https://mirrors.aliyun.com/termux/termux-main: ok
+#8 10.43 [*] (1) https://mirror.iscas.ac.cn/termux/apt/termux-main: ok
+#8 10.43 [*] (1) https://mirrors.cernet.edu.cn/termux/apt/termux-main: ok
+#8 10.43 [*] (1) https://mirrors.bfsu.edu.cn/termux/apt/termux-main: ok
+#8 10.43 [*] (1) https://mirrors.nju.edu.cn/termux/apt/termux-main: ok
+#8 10.43 [*] (1) https://mirrors.sdu.edu.cn/termux/termux-main: ok
+#8 10.43 [*] (1) https://mirror.nyist.edu.cn/termux/apt/termux-main: ok
+#8 10.43 [*] (1) https://mirrors.sustech.edu.cn/termux/apt/termux-main: ok
+#8 13.50 [*] (1) https://mirrors.tuna.tsinghua.edu.cn/termux/apt/termux-main: ok
+#8 13.50 [*] (1) https://mirrors.sau.edu.cn/termux/apt/termux-main: ok
+#8 13.50 [*] (1) https://mirror.sjtu.edu.cn/termux/termux-main/: ok
+#8 13.50 [*] (1) https://mirrors.cqupt.edu.cn/termux/termux-main: ok
+#8 13.50 [*] (1) https://mirrors.ustc.edu.cn/termux/termux-main: ok
+#8 13.50 [*] (1) https://mirror.leitecastro.com/termux/termux-main: ok
+#8 13.50 [*] (1) https://mirrors.medzik.dev/termux/termux-main: bad
+#8 13.50 [*] (1) https://ftp.fau.de/termux/termux-main: ok
+#8 13.50 [*] (1) https://mirror.mwt.me/termux/main: ok
+#8 13.50 [*] (1) https://termux.3san.dev/termux/termux-main: ok
+#8 15.23 [*] (1) https://is.mirror.flokinet.net/termux/termux-main: ok
+#8 15.23 [*] (1) https://termux.librehat.com/apt/termux-main: ok
+#8 15.23 [*] (1) https://ftp.agdsn.de/termux/termux-main: ok
+#8 15.23 [*] (1) https://nl.mirror.flokinet.net/termux/termux-main: ok
+#8 15.23 [*] (1) https://mirror.polido.pt/termux/termux-main: bad
+#8 15.23 [*] (1) https://mirror.sunred.org/termux/termux-main: ok
+#8 15.23 [*] (1) https://mirror.autkin.net/termux/termux-main: ok
+#8 15.23 [*] (1) https://mirror.bouwhuis.network/termux/termux-main: ok
+#8 15.23 [*] (1) https://mirrors.cfe.re/termux/termux-main: bad
+#8 15.23 [*] (1) https://mirrors.de.sahilister.net/termux/termux-main: ok
+#8 21.26 [*] (1) https://md.mirrors.hacktegic.com/termux/termux-main: bad
+#8 21.26 [*] (1) https://mirror.accum.se/mirror/termux.dev/termux-main: ok
+#8 21.26 [*] (1) https://mirror.termux.dev/termux-main: bad
+#8 21.26 [*] (1) https://termux.mentality.rip/termux-main: bad
+#8 21.26 [*] (1) https://termux.cdn.lumito.net/termux-main: bad
+#8 21.26 [*] (1) https://ro.mirror.flokinet.net/termux/termux-main: ok
+#8 21.26 [*] (4) https://grimler.se/termux/termux-main: ok
+#8 21.26 [*] (1) https://packages.termux.dev/apt/termux-main: ok
+#8 21.26 [*] (1) https://mirror.mwt.me/termux/main: ok
+#8 21.26 [*] (1) https://gnlug.org/pub/termux/termux-main: ok
+#8 22.16 [*] (1) https://plug-mirror.rcac.purdue.edu/termux/termux-main: ok
+#8 22.16 [*] (1) https://mirrors.utermux.dev/termux/termux-main: bad
+#8 22.16 [*] (1) https://termux.danyael.xyz/termux/termux-main: ok
+#8 22.16 [*] (1) https://dl.kcubeterm.com/termux-main: bad
+#8 22.16 [*] (1) https://mirror.quantum5.ca/termux/termux-main: ok
+#8 22.16 [*] (1) https://mirror.csclub.uwaterloo.ca/termux/termux-main: ok
+#8 22.16 [*] (1) https://mirror.fcix.net/termux/termux-main: ok
+#8 22.16 [*] (1) https://mirror.vern.cc/termux/termux-main: bad
+#8 22.16 [*] (1) https://mirrors.middlendian.com/termux/termux-main: ok
+#8 22.16 [*] (1) https://repository.su/termux/termux-main/: ok
+#8 22.81 [*] (1) http://mirror.mephi.ru/termux/termux-main: ok
+#8 22.85 Picking mirror: (23) /data/data/com.termux/files/usr/etc/termux/mirrors/asia/linux.domainesia.com
+#8 22.85 
+#8 22.85 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#8 22.85 
+#8 ...
+
+#7 [builder 2/7] RUN pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static     patchelf     binutils
+#7 23.12 [*] (1) https://md.mirrors.hacktegic.com/termux/termux-main: bad
+#7 23.12 [*] (1) https://mirror.accum.se/mirror/termux.dev/termux-main: ok
+#7 23.12 [*] (1) https://mirror.termux.dev/termux-main: bad
+#7 23.12 [*] (1) https://termux.mentality.rip/termux-main: bad
+#7 23.12 [*] (1) https://termux.cdn.lumito.net/termux-main: bad
+#7 23.12 [*] (1) https://ro.mirror.flokinet.net/termux/termux-main: ok
+#7 23.12 [*] (4) https://grimler.se/termux/termux-main: ok
+#7 23.12 [*] (1) https://packages.termux.dev/apt/termux-main: ok
+#7 23.12 [*] (1) https://mirror.mwt.me/termux/main: ok
+#7 23.12 [*] (1) https://gnlug.org/pub/termux/termux-main: ok
+#7 24.00 [*] (1) https://plug-mirror.rcac.purdue.edu/termux/termux-main: ok
+#7 24.00 [*] (1) https://mirrors.utermux.dev/termux/termux-main: bad
+#7 24.00 [*] (1) https://termux.danyael.xyz/termux/termux-main: ok
+#7 24.00 [*] (1) https://dl.kcubeterm.com/termux-main: bad
+#7 24.00 [*] (1) https://mirror.quantum5.ca/termux/termux-main: ok
+#7 24.00 [*] (1) https://mirror.csclub.uwaterloo.ca/termux/termux-main: ok
+#7 24.00 [*] (1) https://mirror.fcix.net/termux/termux-main: ok
+#7 24.00 [*] (1) https://mirror.vern.cc/termux/termux-main: bad
+#7 24.00 [*] (1) https://mirrors.middlendian.com/termux/termux-main: ok
+#7 24.00 [*] (1) https://repository.su/termux/termux-main/: ok
+#7 24.73 [*] (1) http://mirror.mephi.ru/termux/termux-main: ok
+#7 24.77 Picking mirror: (29) /data/data/com.termux/files/usr/etc/termux/mirrors/chinese_mainland/mirror.iscas.ac.cn
+#7 24.78 
+#7 24.78 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#7 24.78 
+#7 27.84 Get:1 https://mirror.iscas.ac.cn/termux/apt/termux-main stable InRelease [14.0 kB]
+#7 28.52 Get:2 https://mirror.iscas.ac.cn/termux/apt/termux-main stable/main x86_64 Packages [586 kB]
+#7 ...
+
+#8 [runtime 3/7] RUN pkg update && pkg install -y tar file
+#8 24.05 Get:1 https://linux.domainesia.com/applications/termux/termux-main stable InRelease [14.0 kB]
+#8 24.53 Get:2 https://linux.domainesia.com/applications/termux/termux-main stable/main x86_64 Packages [589 kB]
+#8 25.47 Fetched 603 kB in 3s (232 kB/s)
+#8 25.47 Reading package lists...
+#8 25.49 Building dependency tree...
+#8 25.49 All packages are up to date.
+#8 25.51 No mirror or mirror group selected. You might want to select one by running 'termux-change-repo'
+#8 25.53 Checking availability of current mirror:
+#8 25.53 [*] https://linux.domainesia.com/applications/termux/termux-main: ok
+#8 26.27 
+#8 26.27 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#8 26.27 
+#8 27.20 Hit:1 https://linux.domainesia.com/applications/termux/termux-main stable InRelease
+#8 27.40 Reading package lists...
+#8 27.42 Building dependency tree...
+#8 27.42 All packages are up to date.
+#8 27.43 
+#8 27.43 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#8 27.43 
+#8 27.44 Reading package lists...
+#8 27.44 Building dependency tree...
+#8 27.45 tar is already the newest version (1.35-3).
+#8 27.45 The following NEW packages will be installed:
+#8 27.45   file
+#8 28.61 0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+#8 28.61 Need to get 17.6 kB of archives.
+#8 28.61 After this operation, 77.8 kB of additional disk space will be used.
+#8 28.61 Get:1 https://linux.domainesia.com/applications/termux/termux-main stable/main x86_64 file x86_64 5.48-3 [17.6 kB]
+#8 28.65 Fetched 17.6 kB in 1s (15.0 kB/s)
+#8 28.66 Selecting previously unselected package file.
+#8 28.66 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5038 files and directories currently installed.)
+#8 28.67 Preparing to unpack .../file_5.48-3_x86%5f64.deb ...
+#8 28.67 Unpacking file (5.48-3) ...
+#8 28.70 Setting up file (5.48-3) ...
+#8 DONE 28.7s
+
+#9 [runtime 4/7] RUN mkdir -p /data/data/com.termux/files/home/out
+#9 DONE 0.1s
+
+#7 [builder 2/7] RUN pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static     patchelf     binutils
+#7 29.56 Fetched 600 kB in 5s (126 kB/s)
+#7 29.56 Reading package lists...
+#7 29.58 Building dependency tree...
+#7 29.58 All packages are up to date.
+#7 29.60 No mirror or mirror group selected. You might want to select one by running 'termux-change-repo'
+#7 29.62 Checking availability of current mirror:
+#7 29.62 [*] https://mirror.iscas.ac.cn/termux/apt/termux-main: ok
+#7 32.11 
+#7 32.11 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#7 32.11 
+#7 34.59 Hit:1 https://mirror.iscas.ac.cn/termux/apt/termux-main stable InRelease
+#7 34.79 Reading package lists...
+#7 34.81 Building dependency tree...
+#7 34.81 All packages are up to date.
+#7 34.82 
+#7 34.82 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+#7 34.82 
+#7 34.82 Reading package lists...
+#7 34.82 Building dependency tree...
+#7 34.83 bash is already the newest version (5.3.20).
+#7 34.83 curl is already the newest version (8.23.0).
+#7 34.83 unzip is already the newest version (6.0-10).
+#7 34.83 patch is already the newest version (2.8.1).
+#7 34.83 coreutils is already the newest version (9.12).
+#7 34.83 Some packages could not be installed. This may mean that you have
+#7 34.83 requested an impossible situation or if you are using the unstable
+#7 34.83 distribution that some required packages have not yet been created
+#7 34.83 or been moved out of Incoming.
+#7 34.83 The following information may help to resolve the situation:
+#7 34.83 
+#7 34.83 The following packages have unmet dependencies:
+#7 34.83  libiconv-static : Depends: libiconv (= 1.19) but 1.19.1 is to be installed
+#7 34.83 E: Unable to correct problems, you have held broken packages.
+#7 ERROR: process "sh -c pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static     patchelf     binutils" did not complete successfully: exit code: 100
+------
+ > [builder 2/7] RUN pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static     patchelf     binutils:
+34.83 coreutils is already the newest version (9.12).
+34.83 Some packages could not be installed. This may mean that you have
+34.83 requested an impossible situation or if you are using the unstable
+34.83 distribution that some required packages have not yet been created
+34.83 or been moved out of Incoming.
+34.83 The following information may help to resolve the situation:
+34.83 
+34.83 The following packages have unmet dependencies:
+34.83  libiconv-static : Depends: libiconv (= 1.19) but 1.19.1 is to be installed
+34.83 E: Unable to correct problems, you have held broken packages.
+------
+Dockerfile:6
+--------------------
+   5 |     # 安装构建依赖，保留动态 iconv 供 git/make 等使用
+   6 | >>> RUN pkg update && pkg install -y \
+   7 | >>>     bash \
+   8 | >>>     cmake \
+   9 | >>>     curl \
+  10 | >>>     clang \
+  11 | >>>     git \
+  12 | >>>     make \
+  13 | >>>     ninja \
+  14 | >>>     unzip \
+  15 | >>>     patch \
+  16 | >>>     pkg-config \
+  17 | >>>     autoconf \
+  18 | >>>     automake \
+  19 | >>>     libtool \
+  20 | >>>     coreutils \
+  21 | >>>     gettext \
+  22 | >>>     file \
+  23 | >>>     libiconv-static \
+  24 | >>>     # patchelf 用于后期清理动态条目
+  25 | >>>     patchelf \
+  26 | >>>     binutils
+  27 |     
+--------------------
+ERROR: failed to build: failed to solve: process "sh -c pkg update && pkg install -y     bash     cmake     curl     clang     git     make     ninja     unzip     patch     pkg-config     autoconf     automake     libtool     coreutils     gettext     file     libiconv-static     patchelf     binutils" did not complete successfully: exit code: 100
